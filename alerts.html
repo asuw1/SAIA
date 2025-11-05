@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAIA - Handle Alerts</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="system-name">SAIA</h1>
+            <span class="system-tagline">Secure Artificial Intelligence Auditor</span>
+        </div>
+        <div class="nav-right">
+            <div class="user-info">
+                <span class="user-role">Auditor</span>
+                <div class="user-avatar">AU</div>
+            </div>
+            <button class="notification-btn" aria-label="Notifications">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <span class="notification-badge">27</span>
+            </button>
+        </div>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="alerts.html" class="nav-item active">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Alerts</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span>Reports</span>
+            </a>
+            <a href="rules.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v6m0 0L9 5m3 3l3-3"></path>
+                    <path d="M19 15v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                </svg>
+                <span>Rules Management</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                </svg>
+                <span>Evidence</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Users / Roles</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Security Alerts</h1>
+            <p class="page-description">Review, investigate, and resolve security alerts detected by SAIA</p>
+        </div>
+
+        <section class="alerts-management">
+            <div class="alerts-summary">
+                <div class="summary-card critical-card">
+                    <h3>12</h3>
+                    <p>Critical Alerts</p>
+                </div>
+                <div class="summary-card high-card">
+                    <h3>35</h3>
+                    <p>High Priority</p>
+                </div>
+                <div class="summary-card medium-card">
+                    <h3>28</h3>
+                    <p>Medium Priority</p>
+                </div>
+                <div class="summary-card overdue-card">
+                    <h3>4</h3>
+                    <p>Overdue (SLA)</p>
+                </div>
+            </div>
+
+            <div class="alerts-toolbar">
+                <div class="toolbar-left">
+                    <button class="btn-secondary" id="bulkAcknowledge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Bulk Acknowledge
+                    </button>
+                    <button class="btn-secondary" id="groupRelated">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Group Related
+                    </button>
+                </div>
+                <div class="toolbar-right">
+                    <select class="filter-select">
+                        <option value="all">All Statuses</option>
+                        <option value="open">Open</option>
+                        <option value="investigating">Investigating</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="all">All Severities</option>
+                        <option value="Critical">Critical</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="alerts-detailed-list">
+                <div class="alert-card critical-alert">
+                    <div class="alert-header">
+                        <input type="checkbox" class="alert-checkbox">
+                        <div class="alert-id-section">
+                            <h4>ALT-2024-001</h4>
+                            <span class="severity-badge critical">Critical</span>
+                            <span class="status-badge open">Open</span>
+                        </div>
+                        <div class="alert-time">
+                            <span class="time-label">Detected</span>
+                            <span class="time-value">2 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="alert-body">
+                        <h3>Unauthorized Access Attempt Detected</h3>
+                        <p class="alert-description">Multiple failed login attempts detected from IP 192.168.1.45 outside business hours (3 failed attempts in 5 minutes)</p>
+                        <div class="alert-details">
+                            <div class="detail-item">
+                                <strong>Clause:</strong> NCA-ACC-4.2.1
+                            </div>
+                            <div class="detail-item">
+                                <strong>User:</strong> ahmed.alsaud@company.sa
+                            </div>
+                            <div class="detail-item">
+                                <strong>Source IP:</strong> 192.168.1.45
+                            </div>
+                            <div class="detail-item">
+                                <strong>Timestamp:</strong> 2024-10-21 14:32:15
+                            </div>
+                        </div>
+                        <div class="alert-recommendations">
+                            <strong>Recommended Actions:</strong>
+                            <ul>
+                                <li>Verify user identity and contact</li>
+                                <li>Check for compromised credentials</li>
+                                <li>Review access logs for related activities</li>
+                                <li>Consider temporary account suspension</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert-footer">
+                        <div class="alert-assignee">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>Assigned to: Ahmed Al-Saud</span>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-action acknowledge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Acknowledge
+                            </button>
+                            <button class="btn-action comment">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                Add Comment
+                            </button>
+                            <button class="btn-action resolve">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                Resolve
+                            </button>
+                            <button class="btn-action evidence">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                Generate Evidence
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-card high-alert">
+                    <div class="alert-header">
+                        <input type="checkbox" class="alert-checkbox">
+                        <div class="alert-id-section">
+                            <h4>ALT-2024-002</h4>
+                            <span class="severity-badge high">High</span>
+                            <span class="status-badge investigating">Investigating</span>
+                        </div>
+                        <div class="alert-time">
+                            <span class="time-label">Detected</span>
+                            <span class="time-value">5 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="alert-body">
+                        <h3>Unencrypted Data Transfer Detected</h3>
+                        <p class="alert-description">Data transfer detected without TLS encryption on port 8080</p>
+                        <div class="alert-details">
+                            <div class="detail-item">
+                                <strong>Clause:</strong> SAMA-ENC-3.1.5
+                            </div>
+                            <div class="detail-item">
+                                <strong>Service:</strong> API Gateway
+                            </div>
+                            <div class="detail-item">
+                                <strong>Port:</strong> 8080 (HTTP)
+                            </div>
+                            <div class="detail-item">
+                                <strong>Timestamp:</strong> 2024-10-21 13:15:42
+                            </div>
+                        </div>
+                        <div class="alert-comments">
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <strong>Fatima Hassan</strong>
+                                    <span>30 minutes ago</span>
+                                </div>
+                                <p>Contacted DevOps team. They are investigating the misconfigured endpoint.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert-footer">
+                        <div class="alert-assignee">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>Assigned to: Fatima Hassan</span>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-action acknowledge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Acknowledge
+                            </button>
+                            <button class="btn-action comment">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                Add Comment
+                            </button>
+                            <button class="btn-action resolve">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                Resolve
+                            </button>
+                            <button class="btn-action evidence">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                Generate Evidence
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert-card medium-alert">
+                    <div class="alert-header">
+                        <input type="checkbox" class="alert-checkbox">
+                        <div class="alert-id-section">
+                            <h4>ALT-2024-003</h4>
+                            <span class="severity-badge medium">Medium</span>
+                            <span class="status-badge open">Open</span>
+                        </div>
+                        <div class="alert-time">
+                            <span class="time-label">Detected</span>
+                            <span class="time-value">8 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="alert-body">
+                        <h3>Log Retention Policy Violation</h3>
+                        <p class="alert-description">Audit logs for authentication service are only retained for 75 days (requirement: 90 days minimum)</p>
+                        <div class="alert-details">
+                            <div class="detail-item">
+                                <strong>Clause:</strong> CST-LOG-2.3.2
+                            </div>
+                            <div class="detail-item">
+                                <strong>Service:</strong> Auth Service
+                            </div>
+                            <div class="detail-item">
+                                <strong>Current Retention:</strong> 75 days
+                            </div>
+                            <div class="detail-item">
+                                <strong>Timestamp:</strong> 2024-10-21 12:48:23
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert-footer">
+                        <div class="alert-assignee">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>Assigned to: Mohammed Ali</span>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-action acknowledge">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Acknowledge
+                            </button>
+                            <button class="btn-action comment">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                Add Comment
+                            </button>
+                            <button class="btn-action resolve">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                Resolve
+                            </button>
+                            <button class="btn-action evidence">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                Generate Evidence
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="workflow.js"></script>
+    <script src="alerts.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

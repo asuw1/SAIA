@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAIA - Review Audit Report</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-left">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <h1 class="system-name">SAIA</h1>
+            <span class="system-tagline">Secure Artificial Intelligence Auditor</span>
+        </div>
+        <div class="nav-right">
+            <div class="user-info">
+                <span class="user-role">Compliance Officer</span>
+                <div class="user-avatar">CO</div>
+            </div>
+            <button class="notification-btn" aria-label="Notifications">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <span class="notification-badge">3</span>
+            </button>
+        </div>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Dashboard</span>
+            </a>
+            <a href="alerts.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>Alerts</span>
+            </a>
+            <a href="reports.html" class="nav-item active">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <span>Reports</span>
+            </a>
+            <a href="rules.html" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v6m0 0L9 5m3 3l3-3"></path>
+                    <path d="M19 15v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4"></path>
+                    <circle cx="12" cy="13" r="3"></circle>
+                </svg>
+                <span>Rules Management</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                    <polyline points="13 2 13 9 20 9"></polyline>
+                </svg>
+                <span>Evidence</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>Users / Roles</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Compliance Reports</h1>
+            <p class="page-description">Generate and review clause-based compliance reports mapped to Saudi regulatory frameworks</p>
+        </div>
+
+        <section class="report-generation">
+            <div class="action-card">
+                <h2>Generate Compliance Report</h2>
+                <form id="reportForm" class="report-form">
+                    <div class="form-group">
+                        <label for="framework">Regulatory Framework</label>
+                        <select id="framework" class="form-control">
+                            <option value="all">All Frameworks</option>
+                            <option value="NCA">NCA - National Cybersecurity Authority</option>
+                            <option value="SAMA">SAMA - Saudi Arabian Monetary Authority</option>
+                            <option value="CST">CST - Communications and Space Technology</option>
+                            <option value="IA">IA - Internal Audit</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateRange">Date Range</label>
+                        <select id="dateRange" class="form-control">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="90">Last 90 Days</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="format">Export Format</label>
+                        <select id="format" class="form-control">
+                            <option value="pdf">PDF Report</option>
+                            <option value="csv">CSV Data</option>
+                            <option value="json">JSON Format</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                        Generate Report
+                    </button>
+                </form>
+            </div>
+
+            <div class="recent-reports">
+                <h2>Recent Reports</h2>
+                <div class="reports-list">
+                    <div class="report-item">
+                        <div class="report-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div class="report-info">
+                            <h4>NCA Compliance Report Q4 2024</h4>
+                            <p>Generated on 2024-10-21 | 156 events analyzed</p>
+                        </div>
+                        <button class="btn-secondary">Download</button>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div class="report-info">
+                            <h4>SAMA Audit Summary October</h4>
+                            <p>Generated on 2024-10-15 | 234 events analyzed</p>
+                        </div>
+                        <button class="btn-secondary">Download</button>
+                    </div>
+                    <div class="report-item">
+                        <div class="report-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div class="report-info">
+                            <h4>All Frameworks Monthly Report</h4>
+                            <p>Generated on 2024-10-01 | 542 events analyzed</p>
+                        </div>
+                        <button class="btn-secondary">Download</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="data.js"></script>
+    <script src="workflow.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
