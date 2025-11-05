@@ -1,0 +1,34 @@
+/* SAIA Dashboard - Base Styles */
+/* Variables, Reset, Typography, Core Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Saudi-inspired color palette */
+    --primary-bg: #0a0e1a;
+    --secondary-bg: #141b2d;
+    --card-bg: #1a2235;
+    --accent-blue: #2196f3;
+    --accent-gold: #d4af37;
+    --text-primary: #e4e6eb;
+    --text-secondary: #b0b3b8;
+    --border-color: #2d3748;
+    --critical: #f44336;
+    --high: #ff9800;
+    --medium: #ffc107;
+    --low: #4caf50;
+    --success: #00c853;
+    --warning: #ff9800;
+    --info: #2196f3;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+}

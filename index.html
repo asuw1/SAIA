@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAIA - Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/pages.css">
 </head>
 <body>
     <header class="top-nav">
@@ -41,7 +44,7 @@
                 </svg>
                 <span>Dashboard</span>
             </a>
-            <a href="alerts.html" class="nav-item">
+            <a href="pages/alerts.html" class="nav-item">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
                     <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -49,14 +52,14 @@
                 </svg>
                 <span>Alerts</span>
             </a>
-            <a href="reports.html" class="nav-item">
+            <a href="pages/reports.html" class="nav-item">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
                 </svg>
                 <span>Reports</span>
             </a>
-            <a href="rules.html" class="nav-item">
+            <a href="pages/rules.html" class="nav-item">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2v6m0 0L9 5m3 3l3-3"></path>
                     <path d="M19 15v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4"></path>
@@ -194,8 +197,8 @@
         </section>
     </main>
 
-    <script src="data.js"></script>
-    <script src="charts.js"></script>
-    <script src="main.js"></script>
+    <script src="assets/js/data/mock-data.js"></script>
+    <script src="assets/js/components/charts.js"></script>
+    <script src="assets/js/pages/dashboard.js"></script>
 </body>
 </html>
