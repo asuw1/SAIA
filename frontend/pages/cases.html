@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIA — Cases</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <header class="top-nav">
+    <div class="nav-left">
+      <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+      <span class="system-name">SAIA</span>
+    </div>
+    <div class="nav-right">
+      <div class="user-info">
+        <div class="user-avatar">U</div>
+        <div><div class="user-name">User</div><div class="user-role">Role</div></div>
+      </div>
+      <button class="btn-icon" id="logoutBtn" title="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header-row">
+      <div>
+        <h1 style="font-size:22px;font-weight:700;">Cases</h1>
+        <p style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Group and track alert investigations</p>
+      </div>
+      <button class="btn btn-primary" id="newCaseBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Case
+      </button>
+    </div>
+
+    <!-- Summary KPIs -->
+    <section class="kpi-section" style="margin-bottom:24px;">
+      <div class="kpi-card"><div class="kpi-icon info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-2a2 2 0 0 0-2 2v2H8V5a2 2 0 0 0-2-2H4"/></svg></div><div class="kpi-content"><div class="kpi-value">14</div><div class="kpi-label">Total Cases</div></div></div>
+      <div class="kpi-card"><div class="kpi-icon critical"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="kpi-content"><div class="kpi-value">5</div><div class="kpi-label">Open</div></div></div>
+      <div class="kpi-card"><div class="kpi-icon warning"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="kpi-content"><div class="kpi-value">3</div><div class="kpi-label">Investigating</div></div></div>
+      <div class="kpi-card"><div class="kpi-icon success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="kpi-content"><div class="kpi-value">6</div><div class="kpi-label">Resolved</div></div></div>
+    </section>
+
+    <div class="table-section">
+      <div class="table-header">
+        <div class="filter-row">
+          <div class="search-bar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="form-control" placeholder="Search cases…">
+          </div>
+          <select class="form-control"><option value="">All Statuses</option><option>open</option><option>investigating</option><option>resolved</option></select>
+          <select class="form-control"><option value="">All Priorities</option><option>critical</option><option>high</option><option>medium</option><option>low</option></select>
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Case ID</th><th>Title</th><th>Priority</th><th>Status</th><th>Alerts</th><th>Assigned To</th><th>Created</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="casesBody">
+            <tr><td colspan="8" style="text-align:center;padding:40px;"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- New Case Modal -->
+  <div class="modal-overlay hidden" id="newCaseModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Create New Case</h3>
+        <button class="modal-close" id="closeModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group"><label>Case Title</label><input type="text" class="form-control" placeholder="e.g. Suspicious IAM activity — Oct 2024"></div>
+        <div class="form-group"><label>Priority</label>
+          <select class="form-control"><option>critical</option><option>high</option><option selected>medium</option><option>low</option></select>
+        </div>
+        <div class="form-group"><label>Description</label><textarea class="form-control" placeholder="Describe the investigation scope…"></textarea></div>
+        <div class="form-group"><label>Assigned To</label><input type="text" class="form-control" placeholder="Analyst name or email"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelModal">Cancel</button>
+        <button class="btn btn-primary" onclick="showToast('Case created successfully','success');document.getElementById('newCaseModal').classList.add('hidden');">Create Case</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const MOCK_CASES = [
+      { id:'CASE-2024-001', title:'Brute-force campaign on admin accounts', priority:'critical', status:'investigating', alerts:7, assignedTo:'Ahmed Al-Saud',  created:'20 Oct 2024' },
+      { id:'CASE-2024-002', title:'Lateral movement via compromised service account', priority:'high', status:'open', alerts:4, assignedTo:'Fatima Hassan', created:'19 Oct 2024' },
+      { id:'CASE-2024-003', title:'Anomalous S3 bucket access patterns', priority:'high', status:'open', alerts:3, assignedTo:'Mohammed Ali', created:'19 Oct 2024' },
+      { id:'CASE-2024-004', title:'After-hours privileged access from foreign IP', priority:'medium', status:'resolved', alerts:2, assignedTo:'Sara Abdullah', created:'18 Oct 2024' },
+      { id:'CASE-2024-005', title:'API rate-limit bypass attempts', priority:'medium', status:'open', alerts:5, assignedTo:'Khaled Ibrahim', created:'17 Oct 2024' },
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const tbody = document.getElementById('casesBody');
+      tbody.innerHTML = MOCK_CASES.map(c => `
+        <tr>
+          <td style="font-family:monospace;font-size:12px;font-weight:600;color:var(--brand);">${c.id}</td>
+          <td style="max-width:280px;"><div style="font-weight:500;">${c.title}</div></td>
+          <td><span class="severity-badge ${c.priority}">${c.priority}</span></td>
+          <td><span class="status-badge ${c.status}">${c.status}</span></td>
+          <td><span style="display:inline-flex;align-items:center;gap:4px;background:var(--brand-light);color:var(--brand);padding:2px 8px;border-radius:var(--radius-full);font-size:11px;font-weight:600;">${c.alerts} alerts</span></td>
+          <td style="font-size:13px;">${c.assignedTo}</td>
+          <td style="font-size:12px;color:var(--text-secondary);">${c.created}</td>
+          <td><button class="btn btn-secondary btn-sm" onclick="showToast('Case detail view coming soon','info')">View</button></td>
+        </tr>`).join('');
+
+      document.getElementById('newCaseBtn').addEventListener('click', () => document.getElementById('newCaseModal').classList.remove('hidden'));
+      document.getElementById('closeModal').addEventListener('click', () => document.getElementById('newCaseModal').classList.add('hidden'));
+      document.getElementById('cancelModal').addEventListener('click', () => document.getElementById('newCaseModal').classList.add('hidden'));
+      document.getElementById('newCaseModal').addEventListener('click', function(e) { if(e.target===this) this.classList.add('hidden'); });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+[
+  {
+    "action": "login",
+    "privilege_level": 1
+  },
+  {
+    "action": "logout",
+    "privilege_level": 1
+  },
+  {
+    "action": "read",
+    "privilege_level": 1
+  },
+  {
+    "action": "view",
+    "privilege_level": 1
+  },
+  {
+    "action": "list",
+    "privilege_level": 1
+  },
+  {
+    "action": "write",
+    "privilege_level": 2
+  },
+  {
+    "action": "create",
+    "privilege_level": 2
+  },
+  {
+    "action": "update",
+    "privilege_level": 2
+  },
+  {
+    "action": "upload",
+    "privilege_level": 2
+  },
+  {
+    "action": "download",
+    "privilege_level": 2
+  },
+  {
+    "action": "delete",
+    "privilege_level": 3
+  },
+  {
+    "action": "modify_permissions",
+    "privilege_level": 3
+  },
+  {
+    "action": "export",
+    "privilege_level": 3
+  },
+  {
+    "action": "share",
+    "privilege_level": 3
+  },
+  {
+    "action": "admin_login",
+    "privilege_level": 4
+  },
+  {
+    "action": "user_create",
+    "privilege_level": 4
+  },
+  {
+    "action": "user_delete",
+    "privilege_level": 4
+  },
+  {
+    "action": "backup",
+    "privilege_level": 4
+  },
+  {
+    "action": "restore",
+    "privilege_level": 4
+  },
+  {
+    "action": "role_change",
+    "privilege_level": 5
+  },
+  {
+    "action": "config_change",
+    "privilege_level": 5
+  },
+  {
+    "action": "policy_modify",
+    "privilege_level": 5
+  },
+  {
+    "action": "security_override",
+    "privilege_level": 5
+  },
+  {
+    "action": "audit_clear",
+    "privilege_level": 5
+  },
+  {
+    "action": "system_shutdown",
+    "privilege_level": 5
+  }
+]

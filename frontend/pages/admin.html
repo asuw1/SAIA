@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIA — Admin</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <header class="top-nav">
+    <div class="nav-left">
+      <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+      <span class="system-name">SAIA</span>
+    </div>
+    <div class="nav-right">
+      <div class="user-info">
+        <div class="user-avatar">A</div>
+        <div><div class="user-name">Admin User</div><div class="user-role">Administrator</div></div>
+      </div>
+      <button class="btn-icon" id="logoutBtn" title="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Admin Panel</h1>
+      <p class="page-description">System configuration, user management, and audit logs</p>
+    </div>
+
+    <div class="tabs" id="adminTabs">
+      <button class="tab-btn active" data-tab="users">Users &amp; Roles</button>
+      <button class="tab-btn" data-tab="system">System Config</button>
+      <button class="tab-btn" data-tab="audit">Audit Log</button>
+      <button class="tab-btn" data-tab="health">Service Health</button>
+    </div>
+
+    <!-- Users Tab -->
+    <div class="tab-panel active" id="tab-users">
+      <div class="page-header-row" style="margin-bottom:16px;">
+        <h2 style="font-size:15px;font-weight:600;">Users &amp; Roles</h2>
+        <button class="btn btn-primary btn-sm" onclick="showToast('User creation coming soon','info')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add User
+        </button>
+      </div>
+      <div class="table-section">
+        <div class="table-container">
+          <table class="table">
+            <thead><tr><th>Username</th><th>Full Name</th><th>Role</th><th>Data Scope</th><th>Status</th><th>Last Login</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr>
+                <td style="font-family:monospace;font-weight:600;">admin</td>
+                <td>Admin User</td>
+                <td><span class="badge" style="background:#f0fdf4;color:#16a34a;">Administrator</span></td>
+                <td><span style="font-size:11px;color:var(--text-tertiary);">All</span></td>
+                <td><span class="status-badge active">active</span></td>
+                <td style="font-size:12px;color:var(--text-secondary);">Just now</td>
+                <td><button class="btn btn-secondary btn-sm" onclick="showToast('Edit user','info')">Edit</button></td>
+              </tr>
+              <tr>
+                <td style="font-family:monospace;font-weight:600;">compliance</td>
+                <td>Compliance Officer</td>
+                <td><span class="badge" style="background:var(--brand-light);color:var(--brand);">Compliance Officer</span></td>
+                <td><span style="font-size:11px;color:var(--text-tertiary);">All</span></td>
+                <td><span class="status-badge active">active</span></td>
+                <td style="font-size:12px;color:var(--text-secondary);">21 Oct 2024</td>
+                <td><button class="btn btn-secondary btn-sm" onclick="showToast('Edit user','info')">Edit</button></td>
+              </tr>
+              <tr>
+                <td style="font-family:monospace;font-weight:600;">auditor</td>
+                <td>Audit User</td>
+                <td><span class="badge" style="background:var(--medium-bg);color:var(--medium);">Analyst</span></td>
+                <td><span style="font-size:11px;color:var(--text-tertiary);">IAM, Network</span></td>
+                <td><span class="status-badge active">active</span></td>
+                <td style="font-size:12px;color:var(--text-secondary);">20 Oct 2024</td>
+                <td><button class="btn btn-secondary btn-sm" onclick="showToast('Edit user','info')">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Config Tab -->
+    <div class="tab-panel" id="tab-system">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;">
+        <div class="card">
+          <div class="card-header"><h3>LLM Configuration</h3></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
+            <div class="form-group" style="margin:0;"><label>Base URL</label><input type="text" class="form-control" value="http://localhost:8001/v1"></div>
+            <div class="form-group" style="margin:0;"><label>Model</label><input type="text" class="form-control" value="llama-3.1-70b"></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <label style="font-size:13px;font-weight:600;">Mock Mode</label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" checked style="accent-color:var(--brand);width:16px;height:16px;">
+                <span style="font-size:12px;color:var(--text-secondary);">Enabled (dev)</span>
+              </label>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="showToast('Config saved','success')">Save</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>ML Detection</h3></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
+            <div class="form-group" style="margin:0;"><label>Anomaly Threshold</label><input type="number" class="form-control" value="0.6" step="0.05" min="0" max="1"></div>
+            <div class="form-group" style="margin:0;"><label>Baseline Maturity (min samples)</label><input type="number" class="form-control" value="50"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
+              <div style="background:var(--bg-surface-2);padding:8px;border-radius:var(--radius-md);border:1px solid var(--border);text-align:center;"><div style="color:var(--text-tertiary);">IAM</div><div style="font-weight:700;color:var(--status-done)">Active</div></div>
+              <div style="background:var(--bg-surface-2);padding:8px;border-radius:var(--radius-md);border:1px solid var(--border);text-align:center;"><div style="color:var(--text-tertiary);">Network</div><div style="font-weight:700;color:var(--status-done)">Active</div></div>
+              <div style="background:var(--bg-surface-2);padding:8px;border-radius:var(--radius-md);border:1px solid var(--border);text-align:center;"><div style="color:var(--text-tertiary);">Application</div><div style="font-weight:700;color:var(--status-done)">Active</div></div>
+              <div style="background:var(--bg-surface-2);padding:8px;border-radius:var(--radius-md);border:1px solid var(--border);text-align:center;"><div style="color:var(--text-tertiary);">Cloud</div><div style="font-weight:700;color:var(--status-done)">Active</div></div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Retrain scheduled','info')">Retrain Models</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h3>Qdrant / RAG</h3></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
+            <div class="form-group" style="margin:0;"><label>Qdrant Host</label><input type="text" class="form-control" value="localhost"></div>
+            <div class="form-group" style="margin:0;"><label>Embedding Model</label><input type="text" class="form-control" value="BAAI/bge-base-en-v1.5"></div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);">
+              <span>NCA Controls indexed:</span><strong>43</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);">
+              <span>Confirmed alerts in RAG:</span><strong>18</strong>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Re-indexing NCA controls…','info')">Re-index Controls</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audit Log Tab -->
+    <div class="tab-panel" id="tab-audit">
+      <div class="table-section">
+        <div class="table-header"><h2>Audit Log</h2><span style="font-size:12px;color:var(--text-tertiary);">Immutable — RLS protected</span></div>
+        <div class="table-container">
+          <table class="table">
+            <thead><tr><th>Timestamp</th><th>User</th><th>Action</th><th>Resource</th><th>IP Address</th></tr></thead>
+            <tbody>
+              <tr><td style="font-size:11px;font-family:monospace;">2024-10-21 14:40:22</td><td>admin</td><td style="font-size:12px;"><code>POST /api/v1/alerts/verdict</code></td><td style="font-size:12px;">/alerts/SAIA-2024-0001</td><td style="font-size:11px;font-family:monospace;">192.168.1.10</td></tr>
+              <tr><td style="font-size:11px;font-family:monospace;">2024-10-21 14:35:08</td><td>compliance</td><td style="font-size:12px;"><code>POST /api/v1/reports</code></td><td style="font-size:12px;">/reports</td><td style="font-size:11px;font-family:monospace;">192.168.1.22</td></tr>
+              <tr><td style="font-size:11px;font-family:monospace;">2024-10-21 14:32:51</td><td>admin</td><td style="font-size:12px;"><code>GET /api/v1/alerts</code></td><td style="font-size:12px;">/alerts</td><td style="font-size:11px;font-family:monospace;">192.168.1.10</td></tr>
+              <tr><td style="font-size:11px;font-family:monospace;">2024-10-21 14:30:01</td><td>auditor</td><td style="font-size:12px;"><code>POST /api/v1/auth/login</code></td><td style="font-size:12px;">/auth/login</td><td style="font-size:11px;font-family:monospace;">10.0.0.45</td></tr>
+              <tr><td style="font-size:11px;font-family:monospace;">2024-10-21 14:28:17</td><td>admin</td><td style="font-size:12px;"><code>POST /api/v1/auth/login</code></td><td style="font-size:12px;">/auth/login</td><td style="font-size:11px;font-family:monospace;">192.168.1.10</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Health Tab -->
+    <div class="tab-panel" id="tab-health">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+        <div class="kpi-card"><div class="kpi-icon success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="kpi-content"><div class="kpi-value" style="font-size:16px;color:var(--status-done);">Healthy</div><div class="kpi-label">FastAPI (port 8000)</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="kpi-content"><div class="kpi-value" style="font-size:16px;color:var(--status-done);">Healthy</div><div class="kpi-label">PostgreSQL (port 5432)</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="kpi-content"><div class="kpi-value" style="font-size:16px;color:var(--status-done);">Healthy</div><div class="kpi-label">Qdrant (port 6333)</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon warning"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="kpi-content"><div class="kpi-value" style="font-size:16px;color:var(--medium);">Mock Mode</div><div class="kpi-label">vLLM (port 8001)</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="kpi-content"><div class="kpi-value" style="font-size:16px;color:var(--brand);">Running</div><div class="kpi-label">LLM Queue Worker</div></div></div>
+        <div class="kpi-card"><div class="kpi-icon info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="kpi-content"><div class="kpi-value" style="font-size:16px;color:var(--brand);">3 pending</div><div class="kpi-label">LLM Queue</div></div></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

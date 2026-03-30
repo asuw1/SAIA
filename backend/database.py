@@ -1,21 +1,24 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-from config import settings
+"""Database connection and async session management."""
+
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from .config import settings
 
 
-engine = create_engine(settings.DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_async_engine(
+    settings.database_url,
+    echo=settings.debug,
+    pool_size=20,
+    max_overflow=10,
+)
+
+AsyncSessionLocal = async_sessionmaker(
+    engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+)
 
 
-class Base(DeclarativeBase):
-    """All models inherit from this base."""
-    pass
-
-
-def get_db():
-    """FastAPI dependency — yields a DB session per request."""
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+async def get_db() -> AsyncSession:
+    """FastAPI dependency — yields an async DB session per request."""
+    async with AsyncSessionLocal() as session:
+        yield session

@@ -1,68 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIA - Compliance Reports</title>
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/layout.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
-    <link rel="stylesheet" href="../assets/css/pages.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIA — Reports</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
-    <header class="top-nav">
-        <div class="nav-left">
-            <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
-            <h1 class="system-name">SAIA</h1>
-            <span class="system-tagline">Secure Artificial Intelligence Auditor</span>
-        </div>
-        <div class="nav-right">
-            <div class="user-info">
-                <span class="user-role">Compliance Officer</span>
-                <div class="user-avatar">CO</div>
-            </div>
-            <button class="notification-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="notification-badge">3</span></button>
-        </div>
-    </header>
+  <header class="top-nav">
+    <div class="nav-left">
+      <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+      <span class="system-name">SAIA</span>
+    </div>
+    <div class="nav-right">
+      <div class="user-info">
+        <div class="user-avatar">U</div>
+        <div><div class="user-name">User</div><div class="user-role">Role</div></div>
+      </div>
+      <button class="btn-icon" id="logoutBtn" title="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
 
-    <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
-            <a href="../index.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><span>Dashboard</span></a>
-            <a href="alerts.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>Alerts</span></a>
-            <a href="reports.html" class="nav-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Reports</span></a>
-            <a href="rules.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="3"></circle></svg><span>Rules Management</span></a>
-            <a href="#" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Users / Roles</span></a>
-        </nav>
-    </aside>
-    <main class="main-content">
-        <div class="page-header"><h1>Compliance Reports</h1><p class="page-description">Generate and review clause-based compliance reports mapped to Saudi regulatory frameworks</p></div>
-        <section class="report-generation">
-            <div class="action-card">
-                <h2>Generate Compliance Report</h2>
-                <form id="reportForm" class="report-form">
-                    <div class="form-group"><label for="framework">Regulatory Framework</label>
-                        <select id="framework" class="form-control"><option value="all">All Frameworks</option><option value="NCA">NCA - National Cybersecurity Authority</option><option value="SAMA">SAMA - Saudi Arabian Monetary Authority</option><option value="CST">CST - Communications and Space Technology</option><option value="IA">IA - Internal Audit</option></select>
-                    </div>
-                    <div class="form-group"><label for="dateRange">Date Range</label>
-                        <select id="dateRange" class="form-control"><option value="7">Last 7 Days</option><option value="30">Last 30 Days</option><option value="90">Last 90 Days</option><option value="custom">Custom Range</option></select>
-                    </div>
-                    <div class="form-group"><label for="format">Export Format</label>
-                        <select id="format" class="form-control"><option value="pdf">PDF Report</option><option value="csv">CSV Data</option><option value="json">JSON Format</option></select>
-                    </div>
-                    <button type="submit" class="btn-primary">Generate Report</button>
-                </form>
-            </div>
-            <div class="recent-reports">
-                <h2>Recent Reports</h2>
-                <div class="reports-list">
-                    <div class="report-item"><div class="report-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div><div class="report-info"><h4>NCA Compliance Report Q4 2024</h4><p>Generated on 2024-10-21 | 156 events analyzed</p></div><button class="btn-secondary">Download</button></div>
-                    <div class="report-item"><div class="report-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div><div class="report-info"><h4>SAMA Audit Summary October</h4><p>Generated on 2024-10-15 | 234 events analyzed</p></div><button class="btn-secondary">Download</button></div>
-                    <div class="report-item"><div class="report-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div><div class="report-info"><h4>All Frameworks Monthly Report</h4><p>Generated on 2024-10-01 | 542 events analyzed</p></div><button class="btn-secondary">Download</button></div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <script src="../assets/js/data/mock-data.js"></script>
-    <script src="../assets/js/components/workflow.js"></script>
-    <script src="../assets/js/pages/dashboard.js"></script>
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header-row">
+      <div>
+        <h1 style="font-size:22px;font-weight:700;">Compliance Reports</h1>
+        <p style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Generate NCA ECC 2:2024 evidence packs and audit narratives</p>
+      </div>
+      <button class="btn btn-primary" id="generateBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Generate Report
+      </button>
+    </div>
+
+    <!-- Report Type Cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px;">
+      <div class="card" style="padding:20px;cursor:pointer;transition:box-shadow .2s,transform .2s;" onmouseenter="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.boxShadow='';this.style.transform=''">
+        <div style="width:40px;height:40px;background:var(--brand-light);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:var(--brand);margin-bottom:12px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:6px;">NCA ECC Compliance Report</h3>
+        <p style="font-size:12px;color:var(--text-secondary);">Full compliance posture against all 43 NCA ECC 2:2024 controls with evidence and remediation steps.</p>
+      </div>
+      <div class="card" style="padding:20px;cursor:pointer;transition:box-shadow .2s,transform .2s;" onmouseenter="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.boxShadow='';this.style.transform=''">
+        <div style="width:40px;height:40px;background:var(--critical-bg);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:var(--critical);margin-bottom:12px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:6px;">Incident Evidence Pack</h3>
+        <p style="font-size:12px;color:var(--text-secondary);">Forensic evidence package for a specific case — logs, timeline, entity baselines, and AI narrative.</p>
+      </div>
+      <div class="card" style="padding:20px;cursor:pointer;transition:box-shadow .2s,transform .2s;" onmouseenter="this.style.boxShadow='var(--shadow-md)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.boxShadow='';this.style.transform=''">
+        <div style="width:40px;height:40px;background:var(--status-done-bg);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:var(--status-done);margin-bottom:12px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:6px;">Executive Summary</h3>
+        <p style="font-size:12px;color:var(--text-secondary);">High-level security posture overview for management — KPIs, trend analysis, top risks.</p>
+      </div>
+    </div>
+
+    <!-- Recent Reports Table -->
+    <div class="table-section">
+      <div class="table-header"><h2>Recent Reports</h2></div>
+      <div class="table-container">
+        <table class="table">
+          <thead><tr><th>Report ID</th><th>Type</th><th>Status</th><th>Generated By</th><th>Created</th><th>Actions</th></tr></thead>
+          <tbody id="reportsBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Generate Report Modal -->
+  <div class="modal-overlay hidden" id="reportModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Generate Report</h3>
+        <button class="modal-close" onclick="document.getElementById('reportModal').classList.add('hidden')">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group"><label>Report Type</label>
+          <select class="form-control"><option>NCA ECC Compliance Report</option><option>Incident Evidence Pack</option><option>Executive Summary</option></select>
+        </div>
+        <div class="form-group"><label>Date Range</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <input type="date" class="form-control"><input type="date" class="form-control">
+          </div>
+        </div>
+        <div class="form-group"><label>Scope</label>
+          <select class="form-control"><option>All Domains</option><option>IAM Only</option><option>Network Only</option><option>Application Only</option><option>Cloud Only</option></select>
+        </div>
+        <div style="background:var(--brand-light);border:1px solid #bfdbfe;border-radius:var(--radius-md);padding:12px;font-size:12px;color:var(--brand);">
+          <strong>ℹ Note:</strong> Report generation is asynchronous. You'll receive a real-time notification when it's ready (via WebSocket).
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="document.getElementById('reportModal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-primary" onclick="startReportGeneration()">Generate (202 Async)</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const MOCK_REPORTS = [
+      { id:'RPT-2024-041', type:'NCA ECC Compliance', status:'resolved',  by:'Ahmed Al-Saud',  created:'20 Oct 2024' },
+      { id:'RPT-2024-040', type:'Incident Evidence',   status:'resolved',  by:'Fatima Hassan',  created:'19 Oct 2024' },
+      { id:'RPT-2024-039', type:'Executive Summary',   status:'pending',   by:'Mohammed Ali',   created:'18 Oct 2024' },
+      { id:'RPT-2024-038', type:'NCA ECC Compliance',  status:'resolved',  by:'Sara Abdullah',  created:'15 Oct 2024' },
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('reportsBody').innerHTML = MOCK_REPORTS.map(r => `
+        <tr>
+          <td style="font-family:monospace;font-size:12px;font-weight:600;color:var(--brand);">${r.id}</td>
+          <td style="font-size:13px;">${r.type}</td>
+          <td><span class="status-badge ${r.status}">${r.status}</span></td>
+          <td>${r.by}</td>
+          <td style="font-size:12px;color:var(--text-secondary);">${r.created}</td>
+          <td style="display:flex;gap:4px;">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Downloading report…','info')">Download</button>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Opening preview…','info')">Preview</button>
+          </td>
+        </tr>`).join('');
+
+      document.getElementById('generateBtn').addEventListener('click', () => document.getElementById('reportModal').classList.remove('hidden'));
+      document.getElementById('reportModal').addEventListener('click', function(e) { if(e.target===this) this.classList.add('hidden'); });
+    });
+
+    function startReportGeneration() {
+      document.getElementById('reportModal').classList.add('hidden');
+      showToast('Report queued (202 Accepted). You will be notified when complete.', 'info', 5000);
+      // Simulate WS notification after 3s
+      setTimeout(() => showToast('✓ Report RPT-2024-042 is ready for download', 'success', 6000), 3000);
+    }
+  </script>
 </body>
 </html>

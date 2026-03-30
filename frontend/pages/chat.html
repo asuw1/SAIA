@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIA — AI Assistant</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <header class="top-nav">
+    <div class="nav-left">
+      <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+      <span class="system-name">SAIA</span>
+    </div>
+    <div class="nav-right">
+      <div class="user-info">
+        <div class="user-avatar">U</div>
+        <div><div class="user-name">User</div><div class="user-role">Role</div></div>
+      </div>
+      <button class="btn-icon" id="logoutBtn" title="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+  </aside>
+
+  <main class="main-content" style="display:flex;flex-direction:column;height:calc(100vh - var(--topbar-h));padding-bottom:0;">
+    <div class="page-header" style="flex-shrink:0;">
+      <h1>AI Assistant</h1>
+      <p class="page-description">Ask questions about alerts, logs, NCA controls, or request compliance summaries</p>
+    </div>
+
+    <div class="chat-layout" style="flex:1;min-height:0;">
+      <!-- Messages -->
+      <div class="chat-messages-area" id="chatMessages">
+        <!-- Welcome message -->
+        <div class="chat-msg assistant">
+          <div class="chat-bubble">
+            Hello! I'm SAIA's AI assistant. I can help you:<br><br>
+            • Query and explain alerts ("Show me critical alerts from last week")<br>
+            • Explain NCA ECC controls ("What is clause 2-2-1?")<br>
+            • Analyse entity behavior ("Is user ahmed.admin behaving normally?")<br>
+            • Generate compliance summaries<br><br>
+            What would you like to know?
+          </div>
+          <span class="chat-time">Just now</span>
+        </div>
+      </div>
+
+      <!-- Suggested prompts -->
+      <div id="suggestedPrompts" style="padding:0 24px 12px;display:flex;flex-wrap:wrap;gap:8px;">
+        <button class="btn btn-secondary btn-sm" onclick="sendPrompt(this.textContent)">Show critical alerts today</button>
+        <button class="btn btn-secondary btn-sm" onclick="sendPrompt(this.textContent)">Explain NCA clause 2-2-1</button>
+        <button class="btn btn-secondary btn-sm" onclick="sendPrompt(this.textContent)">Summarise IAM anomalies this week</button>
+        <button class="btn btn-secondary btn-sm" onclick="sendPrompt(this.textContent)">What is the current compliance score?</button>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input-row">
+        <input type="text" class="form-control" id="chatInput" placeholder="Ask me about your security environment…" autocomplete="off">
+        <button class="btn btn-primary" id="sendBtn" onclick="sendMessage()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const MOCK_RESPONSES = {
+      default: [
+        "Based on the log data, I can see elevated activity in the IAM domain over the past 24 hours. There are **5 open critical alerts** related to excessive failed login attempts, primarily targeting service accounts.",
+        "Analysing the NCA ECC 2:2024 control mapping — clause **2-2-1** covers Identity and Access Management. The current compliance posture shows 87% adherence, with 3 controls requiring immediate attention.",
+        "The entity `user:ahmed.admin` shows anomalous behavior: login at **03:14 AM** from IP `41.67.x.x` (Egypt), which deviates significantly from the established baseline (normal hours: Sun-Thu 08:00-17:00, location: Riyadh).",
+        "Current security score: **78/100**. Main risk areas: (1) IAM — 3 unresolved privilege escalation alerts, (2) Network — perimeter firewall showing port-scan patterns, (3) Cloud — 1 S3 bucket with public ACL.",
+      ]
+    };
+
+    let responseIndex = 0;
+
+    function getTime() {
+      return new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+    }
+
+    function appendMsg(text, role) {
+      const area = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = 'chat-msg ' + role;
+      div.innerHTML = `<div class="chat-bubble">${text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</div><span class="chat-time">${getTime()}</span>`;
+      area.appendChild(div);
+      area.scrollTop = area.scrollHeight;
+    }
+
+    function appendTyping() {
+      const area = document.getElementById('chatMessages');
+      const div = document.createElement('div');
+      div.className = 'chat-msg assistant';
+      div.id = 'typingIndicator';
+      div.innerHTML = `<div class="chat-bubble" style="display:flex;gap:6px;align-items:center;">
+        <span style="width:7px;height:7px;background:var(--text-tertiary);border-radius:50%;animation:blink 1s infinite .0s;display:inline-block;"></span>
+        <span style="width:7px;height:7px;background:var(--text-tertiary);border-radius:50%;animation:blink 1s infinite .2s;display:inline-block;"></span>
+        <span style="width:7px;height:7px;background:var(--text-tertiary);border-radius:50%;animation:blink 1s infinite .4s;display:inline-block;"></span>
+      </div>`;
+      area.appendChild(div);
+      area.scrollTop = area.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const msg = input.value.trim();
+      if (!msg) return;
+      input.value = '';
+      document.getElementById('suggestedPrompts').style.display = 'none';
+
+      appendMsg(msg, 'user');
+      appendTyping();
+
+      const btn = document.getElementById('sendBtn');
+      btn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById('typingIndicator')?.remove();
+        const response = MOCK_RESPONSES.default[responseIndex % MOCK_RESPONSES.default.length];
+        responseIndex++;
+        appendMsg(response, 'assistant');
+        btn.disabled = false;
+        input.focus();
+      }, 1200 + Math.random() * 800);
+    }
+
+    function sendPrompt(text) {
+      document.getElementById('chatInput').value = text;
+      sendMessage();
+    }
+
+    document.getElementById('chatInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+
+    // Blink animation for typing dots
+    const style = document.createElement('style');
+    style.textContent = `@keyframes blink { 0%,80%,100%{opacity:.2} 40%{opacity:1} }`;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

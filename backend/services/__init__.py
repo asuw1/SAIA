@@ -1,6 +1,44 @@
-from services.normalization_service import normalize
-from services.ingestion_service import ingest_logs, parse_json_logs, parse_csv_logs
-from services.rule_engine import run_rule_engine
-from services.ai_service import run_ai_analysis, detector
-from services.alert_service import get_alerts, get_alert_by_id, update_alert, add_comment, create_case, get_alert_summary
-from services.report_service import generate_report, list_reports
+"""Business logic services for SAIA V4."""
+
+from .websocket import ConnectionManager
+from .llm_client import LLMClient, get_llm_client
+from .rag_service import RAGService, get_rag_service
+from .ingestion import (
+    compute_quality_score,
+    normalize_event,
+    parse_json_upload,
+    parse_csv_upload,
+    process_upload,
+    process_ingest,
+)
+from .feature_extractor import extract_features, FEATURE_NAMES
+from .ml_detector import (
+    load_models,
+    normalize_if_score,
+    compute_combined_score,
+    compute_severity,
+    detect_anomaly,
+    update_entity_baselines,
+)
+
+__all__ = [
+    "ConnectionManager",
+    "LLMClient",
+    "get_llm_client",
+    "RAGService",
+    "get_rag_service",
+    "compute_quality_score",
+    "normalize_event",
+    "parse_json_upload",
+    "parse_csv_upload",
+    "process_upload",
+    "process_ingest",
+    "extract_features",
+    "FEATURE_NAMES",
+    "load_models",
+    "normalize_if_score",
+    "compute_combined_score",
+    "compute_severity",
+    "detect_anomaly",
+    "update_entity_baselines",
+]

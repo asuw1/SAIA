@@ -1,0 +1,322 @@
+[
+  {
+    "matrix_id": "CSM-IAM-001",
+    "domain": "Identity and Access Management",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "failed_login_count",
+        "unique_source_ips",
+        "login_attempt_frequency"
+      ],
+      "description": "Multiple failed login attempts from different IP addresses within short timeframe indicating potential brute force attack"
+    },
+    "primary_clause": "2-2-1",
+    "secondary_clauses": ["2-2-2", "2-13-1"],
+    "severity_guidance": "Critical if >50 failed attempts in 30min, High if >20, Medium if >10",
+    "explanation_template": "Account {principal} experienced {failed_count} failed login attempts from {ip_count} unique IPs in {time_window}. Pattern suggests brute force attack."
+  },
+  {
+    "matrix_id": "CSM-IAM-002",
+    "domain": "Identity and Access Management",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "login_timestamp",
+        "source_location",
+        "login_ip_geolocation"
+      ],
+      "description": "Login detected from location that is geographically impossible given previous login location and time delta"
+    },
+    "primary_clause": "2-2-1",
+    "secondary_clauses": ["2-2-3", "2-13-1"],
+    "severity_guidance": "High if distance > 1000km and time delta < 2 hours, Medium if distance > 500km",
+    "explanation_template": "User {principal} logged in from {new_location} only {time_delta} after login from {prev_location}, distance {distance}km apart."
+  },
+  {
+    "matrix_id": "CSM-IAM-003",
+    "domain": "Identity and Access Management",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "role_assignment",
+        "privilege_level_change",
+        "assignment_timestamp"
+      ],
+      "description": "User privileges escalated to critical level outside of change management window"
+    },
+    "primary_clause": "2-2-4",
+    "secondary_clauses": ["2-2-2", "2-5-2"],
+    "severity_guidance": "Critical for any escalation to level 5 outside business hours, High during business hours",
+    "explanation_template": "User {principal} privilege level escalated from {old_level} to {new_level} at {timestamp} outside change management window."
+  },
+  {
+    "matrix_id": "CSM-IAM-004",
+    "domain": "Identity and Access Management",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "last_login_timestamp",
+        "account_creation_date",
+        "account_status"
+      ],
+      "description": "Dormant account that has not logged in for extended period suddenly becomes active"
+    },
+    "primary_clause": "2-2-2",
+    "secondary_clauses": ["2-2-1", "2-13-2"],
+    "severity_guidance": "Medium for dormancy > 90 days, High if account was in deprovisioning state",
+    "explanation_template": "Dormant account {principal} (inactive for {dormancy_days} days) suddenly became active with action {action}."
+  },
+  {
+    "matrix_id": "CSM-IAM-005",
+    "domain": "Identity and Access Management",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "action_performed",
+        "resource_accessed",
+        "access_deviation_sigma"
+      ],
+      "description": "User accessing resources that deviate significantly from established baseline patterns"
+    },
+    "primary_clause": "2-2-3",
+    "secondary_clauses": ["2-3-2", "2-7-1"],
+    "severity_guidance": "Medium if deviation > 2 sigma and new resource is sensitive, High if > 3 sigma, Critical if asset is mission-critical",
+    "explanation_template": "User {principal} accessed {resource} with deviation {sigma_deviation} sigmas from baseline. Normal access patterns: {baseline_resources}."
+  },
+  {
+    "matrix_id": "CSM-IAM-006",
+    "domain": "Identity and Access Management",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "group_membership_change",
+        "role_change_timestamp",
+        "approver_id"
+      ],
+      "description": "Role or group membership change not approved through proper change management workflow"
+    },
+    "primary_clause": "2-2-1",
+    "secondary_clauses": ["2-1-3", "2-5-2"],
+    "severity_guidance": "Critical for privileged group changes without approval, High for sensitive group changes",
+    "explanation_template": "User {principal} {action_type} group/role {group_name} without proper approval workflow."
+  },
+  {
+    "matrix_id": "CSM-NET-001",
+    "domain": "Network Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "outbound_connections",
+        "destination_ports",
+        "connection_count_spike"
+      ],
+      "description": "Host establishing unusual number of outbound connections to multiple internal hosts suggesting lateral movement"
+    },
+    "primary_clause": "2-5-1",
+    "secondary_clauses": ["2-5-3", "2-3-1"],
+    "severity_guidance": "Critical if scanning >100 hosts in 1 hour, High if scanning >20 hosts, Medium if >5 hosts",
+    "explanation_template": "Host {source_ip} initiated {connection_count} outbound connections to {unique_dest_count} unique internal destinations in {time_window}, typical baseline is {baseline_connections}."
+  },
+  {
+    "matrix_id": "CSM-NET-002",
+    "domain": "Network Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "packet_destination_ports",
+        "port_scan_pattern",
+        "connection_attempt_count"
+      ],
+      "description": "Sequential port scanning activity detected on network segment"
+    },
+    "primary_clause": "2-5-2",
+    "secondary_clauses": ["2-5-3", "2-3-1"],
+    "severity_guidance": "High for scanning common service ports, Critical if scanning all ports 1-65535",
+    "explanation_template": "Port scan detected from {source_ip} targeting sequential ports {port_range} on {target_subnet}."
+  },
+  {
+    "matrix_id": "CSM-NET-003",
+    "domain": "Network Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "data_transfer_volume",
+        "destination_classification",
+        "transfer_protocol"
+      ],
+      "description": "Unusually large data exfiltration detected to external IP addresses"
+    },
+    "primary_clause": "2-7-2",
+    "secondary_clauses": ["2-5-3", "2-3-3"],
+    "severity_guidance": "Critical if >1GB to external, High if >100MB, Medium if >10MB and destination is high-risk country",
+    "explanation_template": "Host {source_ip} transferred {data_volume}MB to external destination {dest_ip} ({dest_country}) in {time_window}, typical transfer is {baseline_volume}MB."
+  },
+  {
+    "matrix_id": "CSM-NET-004",
+    "domain": "Network Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "dns_query_frequency",
+        "dns_query_size",
+        "response_time_variance"
+      ],
+      "description": "DNS queries used as covert channel indicating data exfiltration via DNS tunneling"
+    },
+    "primary_clause": "2-5-1",
+    "secondary_clauses": ["2-7-2", "2-14-2"],
+    "severity_guidance": "High if >10000 DNS queries/hour to single domain, Critical if query size > 255 bytes",
+    "explanation_template": "Anomalous DNS activity from {source_ip}: {query_count} queries to {unique_domains} unique domains in {time_window}, suggestion of DNS tunneling."
+  },
+  {
+    "matrix_id": "CSM-NET-005",
+    "domain": "Network Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "packet_size",
+        "traffic_pattern",
+        "protocol_usage"
+      ],
+      "description": "Unusual network traffic patterns detected in encrypted tunnels or abnormal protocol usage"
+    },
+    "primary_clause": "2-5-3",
+    "secondary_clauses": ["2-5-1", "2-8-1"],
+    "severity_guidance": "Medium for protocol anomalies, High for unexpected encrypted traffic volumes",
+    "explanation_template": "Network segment {segment} detected unusual traffic pattern: {pattern_description} at {timestamp}."
+  },
+  {
+    "matrix_id": "CSM-APP-001",
+    "domain": "Application Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "log_deletion_count",
+        "audit_trail_gaps",
+        "system_time_changes"
+      ],
+      "description": "Application or system logs deliberately tampered with or deleted"
+    },
+    "primary_clause": "2-3-2",
+    "secondary_clauses": ["2-13-1", "2-12-2"],
+    "severity_guidance": "Critical for any evidence of log tampering, immediate escalation required",
+    "explanation_template": "Application logs for {application} show evidence of tampering: {gap_count} gaps, {deleted_count} deleted entries, detected at {timestamp}."
+  },
+  {
+    "matrix_id": "CSM-APP-002",
+    "domain": "Application Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "audit_log_volume",
+        "audit_time_gaps",
+        "concurrent_gap_count"
+      ],
+      "description": "Suspicious gaps in audit logs suggesting potential event suppression or audit evasion"
+    },
+    "primary_clause": "2-3-2",
+    "secondary_clauses": ["2-1-4", "2-12-2"],
+    "severity_guidance": "Critical for any gaps >1 minute, High for >10 second gaps during suspicious activity period",
+    "explanation_template": "Audit logs for system {system} contain {gap_count} suspicious gaps totaling {gap_duration} minutes during period {time_window}."
+  },
+  {
+    "matrix_id": "CSM-APP-003",
+    "domain": "Application Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "configuration_change",
+        "change_approver",
+        "change_justification"
+      ],
+      "description": "Unauthorized or undocumented application configuration changes detected"
+    },
+    "primary_clause": "2-3-1",
+    "secondary_clauses": ["2-1-3", "2-5-2"],
+    "severity_guidance": "Critical for security-related config changes without approval, High for unapproved changes to sensitive apps",
+    "explanation_template": "Unauthorized configuration change detected in {application}: {config_param} changed from {old_value} to {new_value} by {actor}."
+  },
+  {
+    "matrix_id": "CSM-APP-004",
+    "domain": "Application Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "error_rate",
+        "error_rate_deviation",
+        "error_spike_timing"
+      ],
+      "description": "Unusual spike in application error rates suggesting potential attack or system compromise"
+    },
+    "primary_clause": "2-3-3",
+    "secondary_clauses": ["2-12-1", "2-5-1"],
+    "severity_guidance": "Medium if error rate > 2x baseline, High if > 5x baseline, Critical if error rate > 10x and affects critical service",
+    "explanation_template": "Application {application} error rate spiked to {error_rate}% (baseline {baseline_rate}%) from {start_time} to {end_time}."
+  },
+  {
+    "matrix_id": "CSM-CLD-001",
+    "domain": "Cloud Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "cloud_console_login",
+        "mfa_used",
+        "login_source_location"
+      ],
+      "description": "Unauthorized access to cloud console detected with suspicious login characteristics"
+    },
+    "primary_clause": "2-6-1",
+    "secondary_clauses": ["2-2-1", "2-3-1"],
+    "severity_guidance": "Critical for console access from suspicious geolocation without MFA, High with MFA, Medium for expected regions",
+    "explanation_template": "Cloud console access for account {account_id} from {location} with MFA status {mfa_status}. Deviation: {deviation_description}."
+  },
+  {
+    "matrix_id": "CSM-CLD-002",
+    "domain": "Cloud Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "resource_creation_count",
+        "resource_creation_rate",
+        "resource_type"
+      ],
+      "description": "Spike in cloud resource creation suggesting unauthorized infrastructure deployment"
+    },
+    "primary_clause": "2-6-2",
+    "secondary_clauses": ["2-1-2", "2-3-1"],
+    "severity_guidance": "Critical if >10 resources created in 1 hour outside change window, High if >5 resources, Medium if resource type is non-critical",
+    "explanation_template": "Cloud resource creation spike: {resource_count} resources created in {time_window} by {principal}, types: {resource_types}."
+  },
+  {
+    "matrix_id": "CSM-CLD-003",
+    "domain": "Cloud Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "storage_bucket_access",
+        "public_access_enabled",
+        "sensitive_data_detected"
+      ],
+      "description": "Cloud storage resources inadvertently exposed to public access"
+    },
+    "primary_clause": "2-7-1",
+    "secondary_clauses": ["2-6-2", "2-11-1"],
+    "severity_guidance": "Critical if sensitive data in exposed storage, High for any misconfiguration, Medium if non-sensitive data only",
+    "explanation_template": "Storage bucket {bucket_name} configured for public access containing {data_classification} data, potentially exposing {asset_count} assets."
+  },
+  {
+    "matrix_id": "CSM-CLD-004",
+    "domain": "Cloud Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "api_call_location",
+        "cross_region_activity",
+        "data_movement_volume"
+      ],
+      "description": "Cloud API calls and data movement from multiple geographical regions in unusual pattern"
+    },
+    "primary_clause": "2-6-3",
+    "secondary_clauses": ["2-5-3", "2-7-2"],
+    "severity_guidance": "Medium for multi-region activity outside normal patterns, High for restricted regions, Critical for policy violation regions",
+    "explanation_template": "Cross-region cloud activity detected: {activity_count} API calls across {region_count} regions in {time_window} by {principal}."
+  },
+  {
+    "matrix_id": "CSM-CLD-005",
+    "domain": "Cloud Security",
+    "anomaly_pattern": {
+      "trigger_features": [
+        "api_key_usage",
+        "api_key_age",
+        "api_call_frequency"
+      ],
+      "description": "Cloud API key used inappropriately or from suspicious source indicating potential credential compromise"
+    },
+    "primary_clause": "2-6-1",
+    "secondary_clauses": ["2-2-1", "2-8-2"],
+    "severity_guidance": "Critical for API key use from external sources, High for use outside normal patterns, Medium for dormant key activation",
+    "explanation_template": "API key {key_id} (age {key_age} days) used by {principal} from {source} making {call_count} calls in {time_window}."
+  }
+]

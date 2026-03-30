@@ -1,45 +1,102 @@
-from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import relationship
-from datetime import datetime, timezone
-from database import Base
+"""Log event Pydantic schemas for SAIA V4."""
+
+from pydantic import BaseModel, Field, field_validator
+from typing import Optional
+from uuid import UUID
+from datetime import datetime
 
 
-class LogEvent(Base):
-    """
-    Canonical log event after normalization.
-    Agreed schema: timestamp, source, event_type, principal, action,
-    resource, result, source_ip, asset_id, session_id, domain, raw_log.
+class LogEventBase(BaseModel):
+    """Base log event fields shared across schemas."""
 
-    raw_log is stored as JSONB for efficient querying in PostgreSQL.
-    """
-    __tablename__ = "log_events"
+    timestamp: datetime
+    source: str = Field(..., description="vpn_server, firewall, app, cloud, etc.")
+    event_type: str = Field(..., description="authentication, network, api_request, etc.")
+    principal: Optional[str] = Field(None, description="User or service actor identifier")
+    action: Optional[str] = Field(None, description="login_attempt, transfer, access, etc.")
+    resource: Optional[str] = Field(None, description="vpn_gateway, endpoint, bucket, etc.")
+    result: Optional[str] = Field(None, description="success, failed, blocked, etc.")
+    source_ip: Optional[str] = Field(None, description="Source IP address")
+    asset_id: Optional[str] = Field(None, description="Human-readable asset identifier")
+    domain: Optional[str] = Field(None, description="Department/business unit for RBAC scoping")
+    raw_log: dict = Field(default_factory=dict, description="Raw log data as dictionary")
 
-    id            = Column(Integer, primary_key=True, index=True)
 
-    # Core canonical schema fields
-    timestamp     = Column(DateTime, nullable=False, index=True)
-    source        = Column(String(100), nullable=False)             # vpn_server | firewall | app | cloud
-    event_type    = Column(String(100), nullable=False, index=True) # authentication | network | api_request
-    principal     = Column(String(255), nullable=True, index=True)  # user OR service actor (never "user")
-    action        = Column(String(100), nullable=True)              # login_attempt | transfer | access
-    resource      = Column(String(255), nullable=True)              # vpn_gateway | endpoint | bucket
-    result        = Column(String(50),  nullable=True)              # success | failed | blocked
-    source_ip     = Column(String(50),  nullable=True)              # always "source_ip" — never "ip_address"
+class LogEventCreate(LogEventBase):
+    """Request model for creating log events."""
 
-    # Enrichment fields
-    asset_id      = Column(String(100), nullable=True, index=True)  # e.g. "vpn-01" — human readable string
-    session_id    = Column(String(100), nullable=True, index=True)  # correlate events from same session
-    domain        = Column(String(100), nullable=True)              # department/BU for RBAC scoping
+    pass
 
-    # Raw log stored as JSONB — enables querying inside the raw log in PostgreSQL
-    raw_log       = Column(JSONB, nullable=True)
-    is_normalized  = Column(Boolean, default=True)
-    is_quarantined = Column(Boolean, default=False)                 # malformed events (SRS FR-06)
 
-    # AI scoring
-    anomaly_score = Column(Float, nullable=True)                    # 0.0 – 1.0 from ML model
+class LogEventResponse(LogEventBase):
+    """Response model for log events."""
 
-    ingested_at   = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    id: UUID
+    upload_id: Optional[UUID] = None
+    quality_score: Optional[float] = Field(None, ge=0.0, le=1.0)
+    is_quarantined: bool = False
+    anomaly_score: Optional[float] = Field(None, ge=0.0, le=1.0)
+    is_flagged: bool = False
+    created_at: datetime
 
-    alerts = relationship("Alert", back_populates="log_event")
+    model_config = {"from_attributes": True}
+
+    @field_validator("quality_score", mode="before")
+    @classmethod
+    def convert_quality_score(cls, v: Optional[str | float]) -> Optional[float]:
+        """Convert string quality score to float."""
+        if v is None:
+            return None
+        if isinstance(v, str):
+            try:
+                return float(v)
+            except ValueError:
+                return None
+        return v
+
+    @field_validator("anomaly_score", mode="before")
+    @classmethod
+    def convert_anomaly_score(cls, v: Optional[str | float]) -> Optional[float]:
+        """Convert string anomaly score to float."""
+        if v is None:
+            return None
+        if isinstance(v, str):
+            try:
+                return float(v)
+            except ValueError:
+                return None
+        return v
+
+
+class LogUploadResponse(BaseModel):
+    """Response model for a batch log upload."""
+
+    upload_id: UUID
+    events_parsed: int = Field(..., ge=0)
+    events_accepted: int = Field(..., ge=0)
+    events_quarantined: int = Field(..., ge=0)
+
+
+class LogIngestRequest(BaseModel):
+    """Request model for ingesting logs from a source."""
+
+    source_name: str = Field(..., min_length=1, description="Name of the log source")
+    domain: str = Field(..., min_length=1, description="Domain/department identifier")
+    events: list[dict] = Field(..., description="List of raw log events to ingest")
+
+
+class UploadResponse(BaseModel):
+    """Response model for a completed log upload."""
+
+    id: UUID
+    user_id: UUID
+    source_name: str
+    domain: str
+    filename: str
+    events_parsed: int = Field(..., ge=0)
+    events_accepted: int = Field(..., ge=0)
+    events_quarantined: int = Field(..., ge=0)
+    status: str = Field(..., description="completed, in_progress, failed, etc.")
+    created_at: datetime
+
+    model_config = {"from_attributes": True}

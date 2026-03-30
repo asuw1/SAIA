@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIA — Alert Detail</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <header class="top-nav">
+    <div class="nav-left">
+      <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+      <span class="system-name">SAIA</span>
+    </div>
+    <div class="nav-right">
+      <div class="user-info">
+        <div class="user-avatar">U</div>
+        <div><div class="user-name">User</div><div class="user-role">Role</div></div>
+      </div>
+      <button class="btn-icon" id="logoutBtn" title="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+  </aside>
+
+  <main class="main-content">
+    <!-- Breadcrumb -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:13px;color:var(--text-tertiary);">
+      <a href="alerts.html" style="color:var(--text-tertiary);text-decoration:none;" onmouseover="this.style.color='var(--brand)'" onmouseout="this.style.color='var(--text-tertiary)'">Alerts</a>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      <span id="alertIdBreadcrumb" style="color:var(--text-primary);font-weight:600;">SAIA-2024-0001</span>
+    </div>
+
+    <!-- Header Card -->
+    <div class="detail-header">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span id="alertIdTitle" style="font-family:monospace;font-size:13px;font-weight:700;color:var(--brand);">SAIA-2024-0001</span>
+            <span class="severity-badge critical" id="severityBadge">critical</span>
+            <span class="status-badge open" id="statusBadge">open</span>
+          </div>
+          <h2 style="font-size:18px;font-weight:700;margin-bottom:6px;" id="alertTitle">Excessive failed login attempts on privileged account</h2>
+          <div class="detail-meta">
+            <span class="detail-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>21 Oct 2024, 14:32:09</span>
+            <span class="detail-meta-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Assigned: Ahmed Al-Saud</span>
+            <span class="detail-meta-item"><span class="clause-chip">2-2-1</span> IAM — Identity Management</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn btn-success" onclick="submitVerdict('true_positive')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            True Positive
+          </button>
+          <button class="btn btn-secondary" onclick="submitVerdict('false_positive')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            False Positive
+          </button>
+          <button class="btn btn-secondary" onclick="showToast('Added to case','info')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-2a2 2 0 0 0-2 2v2H8V5a2 2 0 0 0-2-2H4"/></svg>
+            Add to Case
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;">
+      <!-- Left column -->
+      <div>
+        <!-- Detection Info -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header"><h3>Detection Details</h3></div>
+          <div class="card-body">
+            <div class="info-grid">
+              <div class="info-item"><label>Entity</label><span style="font-family:monospace;">user:ahmed.admin</span></div>
+              <div class="info-item"><label>Domain</label><span>IAM</span></div>
+              <div class="info-item"><label>Anomaly Score</label>
+                <span style="display:flex;align-items:center;gap:8px;">
+                  <div class="progress-bar" style="width:80px;"><div class="progress-bar-fill" style="width:94%;background:var(--critical);"></div></div>
+                  <strong>0.94</strong>
+                </span>
+              </div>
+              <div class="info-item"><label>Baseline Deviation</label><span>+4.2σ (MAD-based)</span></div>
+              <div class="info-item"><label>Rule Triggered</label><span>Excessive Failed Logins</span></div>
+              <div class="info-item"><label>Detection Source</label><span>ML + Rule Engine</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Enrichment -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header">
+            <h3>AI Enrichment (Service A)</h3>
+            <span style="font-size:11px;background:var(--status-done-bg);color:var(--status-done);padding:2px 8px;border-radius:var(--radius-full);font-weight:600;">Enriched</span>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Root Cause Hypothesis</label>
+              <div style="background:var(--bg-surface-2);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px;font-size:13px;line-height:1.7;">
+                The anomaly pattern suggests a <strong>credential stuffing attack</strong> targeting the privileged account <code>ahmed.admin</code>. The source IPs (14 distinct addresses across 3 countries) indicate an automated attack campaign. The account shows 47 failed authentications over 8 minutes, significantly exceeding the baseline of 0.3 failures/hour.
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Affected NCA Controls</label>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <span class="clause-chip">2-2-1</span>
+                <span class="clause-chip">2-2-3</span>
+                <span class="clause-chip">2-2-4</span>
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label>Recommended Remediation</label>
+              <ol style="padding-left:18px;font-size:13px;line-height:2;color:var(--text-secondary);">
+                <li>Temporarily lock account <code>ahmed.admin</code> pending investigation</li>
+                <li>Block source IP ranges at perimeter firewall</li>
+                <li>Enable MFA enforcement for all privileged accounts (NCA 2-2-3)</li>
+                <li>Review and rotate credentials for affected account</li>
+                <li>File incident report per NCA ECC 2-14-1</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Raw Log Events -->
+        <div class="card">
+          <div class="card-header"><h3>Triggering Log Events</h3><span style="font-size:12px;color:var(--text-tertiary);">47 events</span></div>
+          <div style="overflow-x:auto;">
+            <table class="table">
+              <thead><tr><th>Timestamp</th><th>Event</th><th>Source IP</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td style="font-size:11px;font-family:monospace;">14:32:09.124</td><td style="font-size:12px;">AUTH_FAILED</td><td style="font-size:11px;font-family:monospace;">41.67.23.111</td><td><span class="severity-badge critical" style="font-size:10px;">FAIL</span></td></tr>
+                <tr><td style="font-size:11px;font-family:monospace;">14:32:09.892</td><td style="font-size:12px;">AUTH_FAILED</td><td style="font-size:11px;font-family:monospace;">41.67.23.112</td><td><span class="severity-badge critical" style="font-size:10px;">FAIL</span></td></tr>
+                <tr><td style="font-size:11px;font-family:monospace;">14:32:10.301</td><td style="font-size:12px;">AUTH_FAILED</td><td style="font-size:11px;font-family:monospace;">185.220.101.5</td><td><span class="severity-badge critical" style="font-size:10px;">FAIL</span></td></tr>
+                <tr><td colspan="4" style="text-align:center;padding:10px;font-size:12px;color:var(--text-tertiary);">+ 44 more events</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div>
+        <!-- Entity Baseline -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header"><h3>Entity Baseline</h3></div>
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div><label style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;">Avg Logins/Day</label><div style="font-size:20px;font-weight:700;">4.2 <span style="font-size:12px;color:var(--critical);font-weight:600;">↑ 47 today</span></div></div>
+              <div><label style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;">Normal Hours</label><div style="font-size:14px;font-weight:600;">Sun–Thu 07:00–17:00</div></div>
+              <div><label style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;">Typical Location</label><div style="font-size:14px;font-weight:600;">Riyadh, SA</div></div>
+              <div><label style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;">Risk Score</label>
+                <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+                  <div class="progress-bar" style="flex:1;"><div class="progress-bar-fill" style="width:92%;background:var(--critical);"></div></div>
+                  <strong>0.92</strong>
+                </div>
+              </div>
+              <div><label style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.5px;">Baseline Maturity</label><div style="font-size:14px;font-weight:600;">237 samples ✓</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Similar Past Alerts (RAG) -->
+        <div class="card" style="margin-bottom:20px;">
+          <div class="card-header"><h3>Similar Past Alerts</h3><span style="font-size:10px;color:var(--text-tertiary);">via RAG</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:10px;background:var(--bg-surface-2);border-radius:var(--radius-md);border:1px solid var(--border);">
+              <div style="font-size:11px;font-family:monospace;color:var(--brand);font-weight:700;">SAIA-2024-0031</div>
+              <div style="font-size:12px;margin-top:2px;">Similar credential stuffing — resolved as TP</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px;">Similarity: 0.91</div>
+            </div>
+            <div style="padding:10px;background:var(--bg-surface-2);border-radius:var(--radius-md);border:1px solid var(--border);">
+              <div style="font-size:11px;font-family:monospace;color:var(--brand);font-weight:700;">SAIA-2024-0019</div>
+              <div style="font-size:12px;margin-top:2px;">IAM brute force — resolved as TP</div>
+              <div style="font-size:11px;color:var(--text-tertiary);margin-top:2px;">Similarity: 0.87</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Verdict History -->
+        <div class="card">
+          <div class="card-header"><h3>Activity Log</h3></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:10px;font-size:12px;">
+            <div style="display:flex;gap:10px;"><span style="color:var(--text-tertiary);min-width:60px;">14:33</span><span>Alert created by ML Engine</span></div>
+            <div style="display:flex;gap:10px;"><span style="color:var(--text-tertiary);min-width:60px;">14:35</span><span>LLM enrichment completed</span></div>
+            <div style="display:flex;gap:10px;"><span style="color:var(--text-tertiary);min-width:60px;">14:40</span><span>Assigned to Ahmed Al-Saud</span></div>
+            <div style="display:flex;gap:10px;"><span style="color:var(--text-tertiary);min-width:60px;">Pending</span><span style="color:var(--text-tertiary);">Analyst verdict</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    // Parse alert ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const alertId = params.get('id') || 'SAIA-2024-0001';
+    document.getElementById('alertIdBreadcrumb').textContent = alertId;
+    document.getElementById('alertIdTitle').textContent = alertId;
+
+    function submitVerdict(verdict) {
+      const label = verdict === 'true_positive' ? 'True Positive' : 'False Positive';
+      const type  = verdict === 'true_positive' ? 'success' : 'info';
+      showToast(`Verdict submitted: ${label}. Feedback stored in RAG.`, type, 5000);
+      document.getElementById('statusBadge').textContent = verdict === 'true_positive' ? 'investigating' : 'false-positive';
+      document.getElementById('statusBadge').className = 'status-badge ' + (verdict === 'true_positive' ? 'investigating' : 'false-positive');
+    }
+  </script>
+</body>
+</html>

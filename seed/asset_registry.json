@@ -1,0 +1,112 @@
+[
+  {
+    "asset_name": "Production Database Server - DB01",
+    "criticality_score": 5,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "Backup Database Server - DB02",
+    "criticality_score": 5,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "Customer Data Warehouse",
+    "criticality_score": 5,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "Financial Records Storage",
+    "criticality_score": 5,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "API Gateway - Production",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Web Application Server - WEB01",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Web Application Server - WEB02",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Load Balancer - LB01",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Identity Provider System",
+    "criticality_score": 4,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "Email Exchange Server",
+    "criticality_score": 3,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "File Server - FS01",
+    "criticality_score": 3,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "Network Firewall Primary",
+    "criticality_score": 5,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Network Firewall Secondary",
+    "criticality_score": 5,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "DNS Server - Primary",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "DNS Server - Secondary",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "VPN Gateway",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "SIEM Server",
+    "criticality_score": 4,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "Cloud Storage - AWS S3 Production",
+    "criticality_score": 5,
+    "is_sensitive": true
+  },
+  {
+    "asset_name": "Cloud Kubernetes Cluster",
+    "criticality_score": 4,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Development Database",
+    "criticality_score": 2,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Staging Web Server",
+    "criticality_score": 2,
+    "is_sensitive": false
+  },
+  {
+    "asset_name": "Logging Infrastructure - ELK Stack",
+    "criticality_score": 3,
+    "is_sensitive": true
+  }
+]

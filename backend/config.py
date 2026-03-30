@@ -1,30 +1,50 @@
+"""Configuration management for SAIA V4 backend."""
+
 from pydantic_settings import BaseSettings
+from typing import Optional
 
 
 class Settings(BaseSettings):
-    # Application
-    APP_NAME: str = "SAIA - Secure Artificial Intelligence Auditor"
-    APP_VERSION: str = "1.0.0"
-    DEBUG: bool = False
+    """Application settings loaded from environment variables."""
 
-    # Database
-    DATABASE_URL: str = "postgresql://saia_user:saia_pass@localhost:5432/saia_db"
+    # App Configuration
+    app_name: str = "SAIA"
+    app_version: str = "4.0.0"
+    debug: bool = False
 
-    # Security
-    SECRET_KEY: str = "changeme-use-a-strong-secret-in-production"
-    ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    # Database Configuration
+    database_url: str = "postgresql+asyncpg://saia:saia_password@localhost:5432/saia_db"
+    db_host: str = "localhost"
+    db_port: int = 5432
+    db_name: str = "saia_db"
+    db_user: str = "saia"
+    db_password: str = "saia_password"
 
-    # AI / ML
-    ANOMALY_THRESHOLD: float = 0.65       # score above this triggers an AI alert
-    AI_MODE: str = "blended"              # "rules_only" | "ai_only" | "blended"
+    # JWT Configuration
+    jwt_secret: str = "change-this-to-a-random-secret-key-in-production"
+    jwt_algorithm: str = "HS256"
+    jwt_expiration_minutes: int = 480
 
-    # Log ingestion
-    MAX_UPLOAD_SIZE_MB: int = 50
-    SUPPORTED_LOG_FORMATS: list = ["json", "csv"]
+    # LLM Configuration
+    llm_base_url: str = "http://localhost:8001/v1"
+    llm_model: str = "llama-3.1-70b"
+    llm_mock_mode: bool = True
+
+    # Qdrant Configuration
+    qdrant_host: str = "localhost"
+    qdrant_port: int = 6333
+    qdrant_api_key: Optional[str] = None
+
+    # Embedding Configuration
+    embedding_model: str = "BAAI/bge-base-en-v1.5"
+    embedding_dim: int = 768
+
+    # Rate Limiting
+    ingest_rate_limit: str = "60/minute"
 
     class Config:
         env_file = ".env"
+        case_sensitive = False
 
 
 settings = Settings()

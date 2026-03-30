@@ -1,40 +1,103 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Boolean
-from sqlalchemy.orm import relationship
-from datetime import datetime, timezone
-from database import Base
+"""Alert Pydantic schemas for SAIA V4."""
+
+from pydantic import BaseModel, Field
+from typing import Optional, Any, Literal
+from uuid import UUID
+from datetime import datetime
 
 
-class Alert(Base):
-    """
-    An alert is generated when a rule fires OR the AI detects an anomaly.
-    Always references the triggering clause for regulatory traceability.
-    Status lifecycle: open → investigating → resolved → verified
-    """
-    __tablename__ = "alerts"
+class TopFeature(BaseModel):
+    """Top anomaly feature contributing to an alert."""
 
-    id            = Column(Integer, primary_key=True, index=True)
-    title         = Column(String(255), nullable=False)
-    description   = Column(Text, nullable=True)
-    severity      = Column(String(20), nullable=False, index=True) # Critical | High | Medium | Low
-    status        = Column(String(30), default="open", index=True) # open | investigating | resolved | verified
-    source        = Column(String(20), default="rule")             # rule | ai | both
+    name: str = Field(..., description="Feature name")
+    value: Any = Field(..., description="Feature value")
+    deviation_sigma: Optional[float] = Field(
+        None,
+        description="Standard deviations from baseline",
+    )
 
-    # Foreign keys
-    rule_id       = Column(Integer, ForeignKey("rules.id"), nullable=True)      # null if AI-only alert
-    clause_id     = Column(Integer, ForeignKey("clauses.id"), nullable=False)
-    log_event_id  = Column(Integer, ForeignKey("log_events.id"), nullable=True)
-    assigned_to   = Column(Integer, ForeignKey("users.id"), nullable=True)
-    case_id       = Column(Integer, ForeignKey("cases.id"), nullable=True)
 
-    # SLA tracking (SRS FR-24)
-    detected_at   = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-    sla_deadline  = Column(DateTime, nullable=True)
-    resolved_at   = Column(DateTime, nullable=True)
-    is_overdue    = Column(Boolean, default=False)
+class TriggeredRule(BaseModel):
+    """Rule that was triggered for an alert."""
 
-    rule          = relationship("Rule", back_populates="alerts")
-    clause        = relationship("Clause", back_populates="alerts")
-    log_event     = relationship("LogEvent", back_populates="alerts")
-    assigned_user = relationship("User", back_populates="alerts")
-    case          = relationship("Case", back_populates="alerts")
-    comments      = relationship("AlertComment", back_populates="alert")
+    rule_id: UUID
+    rule_name: str
+    clause: str
+
+
+class LLMAssessment(BaseModel):
+    """LLM-powered assessment of an alert."""
+
+    violation_detected: bool
+    confidence: float = Field(..., ge=0.0, le=1.0)
+    primary_clause: str
+    secondary_clauses: list[str] = Field(default_factory=list)
+    severity_assessment: str = Field(
+        ...,
+        description="Critical, High, Medium, or Low",
+    )
+    reasoning: str
+    recommended_action: str
+    false_positive_likelihood: float = Field(..., ge=0.0, le=1.0)
+
+
+class AlertResponse(BaseModel):
+    """Response model for an alert."""
+
+    id: UUID
+    alert_number: int
+    domain: str
+    severity: str = Field(..., description="Critical, High, Medium, or Low")
+    status: str = Field(
+        ...,
+        description="open, investigating, resolved, or verified",
+    )
+    source: str = Field(
+        ...,
+        description="rule, ai, or both",
+    )
+    entity_principal: Optional[str] = None
+    clause_reference: str
+    anomaly_score: Optional[float] = Field(None, ge=0.0, le=1.0)
+    top_features: list[TopFeature] = Field(default_factory=list)
+    triggered_rules: list[TriggeredRule] = Field(default_factory=list)
+    llm_assessment: Optional[LLMAssessment] = None
+    event_count: int = Field(default=0, ge=0)
+    assigned_to: Optional[UUID] = None
+    case_id: Optional[UUID] = None
+    analyst_verdict: Optional[str] = Field(
+        None,
+        description="true_positive or false_positive",
+    )
+    analyst_comment: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class AlertUpdate(BaseModel):
+    """Request model for updating an alert."""
+
+    status: Optional[str] = Field(
+        None,
+        description="open, investigating, resolved, or verified",
+    )
+    assigned_to: Optional[UUID] = None
+    analyst_comment: Optional[str] = None
+
+
+class AlertFeedback(BaseModel):
+    """Request model for providing feedback on an alert."""
+
+    verdict: Literal["true_positive", "false_positive"]
+    comment: str
+
+
+class AlertListResponse(BaseModel):
+    """Response model for paginated alert list."""
+
+    alerts: list[AlertResponse]
+    total: int = Field(..., ge=0)
+    page: int = Field(..., ge=1)
+    page_size: int = Field(..., ge=1)

@@ -1,29 +1,94 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import relationship
-from datetime import datetime, timezone
-from database import Base
+"""Rule Pydantic schemas for SAIA V4."""
+
+from pydantic import BaseModel, Field
+from typing import Optional, Any
+from uuid import UUID
+from datetime import datetime
 
 
-class Rule(Base):
-    """
-    A compliance rule that maps to a regulatory clause.
-    logic_json stored as JSONB for direct querying in PostgreSQL.
-    Status lifecycle: draft → active → archived
-    """
-    __tablename__ = "rules"
+class FieldCheck(BaseModel):
+    """A single field check condition in a rule."""
 
-    id          = Column(Integer, primary_key=True, index=True)
-    name        = Column(String(255), nullable=False)
-    description = Column(String(500), nullable=True)
-    clause_id   = Column(Integer, ForeignKey("clauses.id"), nullable=False)
-    severity    = Column(String(20), nullable=False)               # Critical | High | Medium | Low
-    logic_json  = Column(JSONB, nullable=False)                    # rule conditions as JSONB
-    version     = Column(String(20), default="1.0")
-    status      = Column(String(20), default="draft")              # draft | active | archived
-    author_id   = Column(Integer, ForeignKey("users.id"), nullable=True)
-    created_at  = Column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at  = Column(DateTime, onupdate=lambda: datetime.now(timezone.utc))
+    field: str = Field(..., description="Field name to check")
+    operator: str = Field(
+        ...,
+        description="Operator: equals, contains, gt, lt, gte, lte, regex, etc.",
+    )
+    value: Any = Field(..., description="Value to compare against")
 
-    clause = relationship("Clause", back_populates="rules")
-    alerts = relationship("Alert", back_populates="rule")
+
+class AggregationCheck(BaseModel):
+    """Aggregation-based check for rule conditions."""
+
+    group_by: list[str] = Field(..., min_length=1, description="Fields to group by")
+    window_minutes: int = Field(..., gt=0, description="Time window in minutes")
+    count_threshold: int = Field(..., gt=0, description="Count threshold to trigger")
+
+
+class RuleConditions(BaseModel):
+    """Complete condition set for a rule."""
+
+    field_checks: list[FieldCheck] = Field(
+        default_factory=list,
+        description="List of field checks (AND logic)",
+    )
+    aggregation: Optional[AggregationCheck] = None
+
+
+class RuleCreate(BaseModel):
+    """Request model for creating a rule."""
+
+    name: str = Field(..., min_length=1, max_length=255)
+    description: Optional[str] = Field(None, max_length=500)
+    domain: str = Field(..., description="Domain/department this rule applies to")
+    clause_reference: str = Field(
+        ...,
+        description="Regulatory clause reference (e.g., PCI-DSS 2.1)",
+    )
+    severity: str = Field(
+        ...,
+        description="Critical, High, Medium, or Low",
+    )
+    conditions: RuleConditions
+
+
+class RuleUpdate(BaseModel):
+    """Request model for updating a rule."""
+
+    name: Optional[str] = Field(None, min_length=1, max_length=255)
+    description: Optional[str] = Field(None, max_length=500)
+    severity: Optional[str] = Field(
+        None,
+        description="Critical, High, Medium, or Low",
+    )
+    conditions: Optional[RuleConditions] = None
+    is_active: Optional[bool] = None
+
+
+class RuleResponse(BaseModel):
+    """Response model for a rule."""
+
+    id: UUID
+    name: str
+    description: Optional[str] = None
+    domain: str
+    clause_reference: str
+    severity: str
+    conditions: RuleConditions
+    is_active: bool
+    version: str = "1.0"
+    author_id: Optional[UUID] = None
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class RuleTestResult(BaseModel):
+    """Response model for rule testing results."""
+
+    matched_events: int = Field(..., ge=0, description="Number of events matching the rule")
+    sample_matches: list[dict] = Field(
+        default_factory=list,
+        description="Sample matched event records",
+    )

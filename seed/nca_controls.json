@@ -1,0 +1,346 @@
+[
+  {
+    "control_id": "2-1-1",
+    "domain": "Cybersecurity Governance",
+    "subdomain": "Policy and Strategy",
+    "title": "Cybersecurity Strategy and Policy Development",
+    "full_text": "The organization shall develop and implement a comprehensive cybersecurity strategy and policies that align with business objectives, regulatory requirements, and industry best practices. This strategy shall be reviewed and updated annually to address emerging threats and changes in the organization's risk profile.",
+    "keywords": ["strategy", "policy", "governance", "cybersecurity", "objectives"]
+  },
+  {
+    "control_id": "2-1-2",
+    "domain": "Cybersecurity Governance",
+    "subdomain": "Risk Management",
+    "title": "Cybersecurity Risk Assessment and Management",
+    "full_text": "The organization shall conduct regular cybersecurity risk assessments to identify, analyze, and prioritize risks. A risk management framework shall be established to address identified risks through appropriate mitigation strategies, acceptance, avoidance, or transfer decisions.",
+    "keywords": ["risk", "assessment", "mitigation", "framework", "management"]
+  },
+  {
+    "control_id": "2-1-3",
+    "domain": "Cybersecurity Governance",
+    "subdomain": "Oversight and Accountability",
+    "title": "Cybersecurity Governance Structure and Accountability",
+    "full_text": "The organization shall establish a governance structure for cybersecurity with clear roles, responsibilities, and accountability mechanisms. A chief information security officer or equivalent shall be designated to oversee cybersecurity programs and report to senior management.",
+    "keywords": ["governance", "CISO", "accountability", "roles", "structure"]
+  },
+  {
+    "control_id": "2-1-4",
+    "domain": "Cybersecurity Governance",
+    "subdomain": "Compliance and Audit",
+    "title": "Cybersecurity Compliance and Internal Audit",
+    "full_text": "The organization shall establish mechanisms to monitor compliance with cybersecurity policies and controls. Regular internal audits shall be conducted to assess the effectiveness of cybersecurity programs and ensure adherence to established policies.",
+    "keywords": ["compliance", "audit", "monitoring", "assessment", "controls"]
+  },
+  {
+    "control_id": "2-2-1",
+    "domain": "Identity and Access Management",
+    "subdomain": "Authentication",
+    "title": "User Authentication and Access Control Policy",
+    "full_text": "The organization shall implement multi-factor authentication for all users accessing critical systems and sensitive data. Authentication mechanisms shall require strong passwords or equivalent security measures and be enforced across all access points including remote access.",
+    "keywords": ["authentication", "MFA", "password", "access", "control"]
+  },
+  {
+    "control_id": "2-2-2",
+    "domain": "Identity and Access Management",
+    "subdomain": "User Access Management",
+    "title": "User Identity Management and Provisioning",
+    "full_text": "The organization shall maintain accurate user identities and implement a formal user provisioning and deprovisioning process. Access shall be granted on a least-privilege basis with documented justification, and user access shall be reviewed and revoked upon role changes or termination.",
+    "keywords": ["identity", "provisioning", "deprovisioning", "least-privilege", "access"]
+  },
+  {
+    "control_id": "2-2-3",
+    "domain": "Identity and Access Management",
+    "subdomain": "Privileged Access Management",
+    "title": "Privileged Account and Access Management",
+    "full_text": "The organization shall implement privileged account management controls including session recording, command logging, and approval workflows for privileged operations. Privileged accounts shall be subject to enhanced monitoring and regular password changes.",
+    "keywords": ["privileged", "PAM", "session", "recording", "monitoring"]
+  },
+  {
+    "control_id": "2-2-4",
+    "domain": "Identity and Access Management",
+    "subdomain": "Account Lifecycle",
+    "title": "Account Lifecycle Management and Monitoring",
+    "full_text": "The organization shall monitor user account lifecycle including creation, modification, and termination. Dormant accounts shall be identified and disabled. Account changes shall be logged and reviewed for unauthorized modifications.",
+    "keywords": ["lifecycle", "dormant", "disabled", "monitoring", "changes"]
+  },
+  {
+    "control_id": "2-2-5",
+    "domain": "Identity and Access Management",
+    "subdomain": "Access Rights Review",
+    "title": "Access Rights Review and Recertification",
+    "full_text": "The organization shall conduct regular reviews of user access rights and system privileges, at minimum quarterly. Business owners shall certify that access is appropriate and timely, and excess privileges shall be promptly removed.",
+    "keywords": ["review", "recertification", "access", "rights", "quarterly"]
+  },
+  {
+    "control_id": "2-3-1",
+    "domain": "Information System Protection",
+    "subdomain": "Configuration Management",
+    "title": "System Hardening and Configuration Management",
+    "full_text": "The organization shall implement secure configuration standards for all systems and maintain baseline configurations. Unauthorized configuration changes shall be detected and reported. Systems shall be configured to implement the principle of least functionality.",
+    "keywords": ["hardening", "configuration", "baseline", "standards", "changes"]
+  },
+  {
+    "control_id": "2-3-2",
+    "domain": "Information System Protection",
+    "subdomain": "Patch Management",
+    "title": "Security Patch Management and Updates",
+    "full_text": "The organization shall establish a patch management process that identifies, tests, and applies security updates to systems and applications. Critical security patches shall be applied within 30 days of availability, and emergency patches addressing actively exploited vulnerabilities within 72 hours.",
+    "keywords": ["patch", "updates", "vulnerability", "management", "testing"]
+  },
+  {
+    "control_id": "2-3-3",
+    "domain": "Information System Protection",
+    "subdomain": "Malware Protection",
+    "title": "Malware Detection and Prevention",
+    "full_text": "The organization shall implement anti-malware solutions on all systems and maintain current malware signatures. Malware incidents shall be detected, contained, and eradicated. Users shall be educated on recognizing and reporting malware threats.",
+    "keywords": ["malware", "anti-virus", "detection", "prevention", "eradication"]
+  },
+  {
+    "control_id": "2-3-4",
+    "domain": "Information System Protection",
+    "subdomain": "System Monitoring",
+    "title": "System Monitoring and Event Logging",
+    "full_text": "The organization shall implement centralized logging for all critical systems. Logs shall be protected, monitored for unauthorized access, and retained according to retention policies. Log analysis shall detect anomalous activities and security events.",
+    "keywords": ["logging", "monitoring", "events", "siem", "analytics"]
+  },
+  {
+    "control_id": "2-4-1",
+    "domain": "Email and Web Protection",
+    "subdomain": "Email Security",
+    "title": "Email Security and Phishing Protection",
+    "full_text": "The organization shall implement email security controls including spam filtering, malware scanning, and phishing detection. Email shall be encrypted in transit and at rest for sensitive communications. Users shall receive training on identifying and reporting phishing attempts.",
+    "keywords": ["email", "phishing", "filtering", "encryption", "spam"]
+  },
+  {
+    "control_id": "2-4-2",
+    "domain": "Email and Web Protection",
+    "subdomain": "Web Security",
+    "title": "Web Application and Browser Security",
+    "full_text": "The organization shall implement web content filtering and advanced threat protection for internet access. Web applications shall be protected against OWASP Top 10 vulnerabilities. Browser security policies shall enforce protection against malicious websites and drive-by downloads.",
+    "keywords": ["web", "browser", "filtering", "OWASP", "threats"]
+  },
+  {
+    "control_id": "2-4-3",
+    "domain": "Email and Web Protection",
+    "subdomain": "DLP",
+    "title": "Data Loss Prevention and Content Control",
+    "full_text": "The organization shall implement data loss prevention controls to prevent unauthorized transmission of sensitive data via email, web, or removable media. Content control policies shall restrict access to inappropriate content categories.",
+    "keywords": ["DLP", "data loss", "prevention", "content", "control"]
+  },
+  {
+    "control_id": "2-5-1",
+    "domain": "Networks Security Management",
+    "subdomain": "Network Architecture",
+    "title": "Network Architecture and Segmentation",
+    "full_text": "The organization shall design network architecture with appropriate segmentation using firewalls, VLANs, and network access controls. DMZs shall isolate public-facing systems from internal networks. Network segments shall be defined based on asset criticality and data sensitivity.",
+    "keywords": ["network", "segmentation", "DMZ", "firewall", "VLAN"]
+  },
+  {
+    "control_id": "2-5-2",
+    "domain": "Networks Security Management",
+    "subdomain": "Firewall and IDS/IPS",
+    "title": "Firewall and Intrusion Detection/Prevention",
+    "full_text": "The organization shall implement firewalls at network boundaries with rules based on the principle of least privilege. Intrusion detection and prevention systems shall monitor network traffic for suspicious activities and malicious payloads. Firewall rules shall be regularly reviewed and updated.",
+    "keywords": ["firewall", "IDS", "IPS", "intrusion", "rules"]
+  },
+  {
+    "control_id": "2-5-3",
+    "domain": "Networks Security Management",
+    "subdomain": "Remote Access",
+    "title": "Remote Access and VPN Security",
+    "full_text": "The organization shall implement secure remote access controls for authorized users. VPN connections shall use strong encryption and authentication. Remote access shall be subject to the same security controls as on-site access. Unauthorized remote access attempts shall be detected and blocked.",
+    "keywords": ["remote", "VPN", "access", "encryption", "authentication"]
+  },
+  {
+    "control_id": "2-6-1",
+    "domain": "Mobile Devices",
+    "subdomain": "Mobile Device Management",
+    "title": "Mobile Device Management and Control",
+    "full_text": "The organization shall implement mobile device management solutions for all organization-owned and BYOD devices accessing organizational systems. Device policies shall enforce encryption, passcode requirements, and remote wipe capabilities. Non-compliant devices shall be blocked from network access.",
+    "keywords": ["MDM", "mobile", "device", "BYOD", "encryption"]
+  },
+  {
+    "control_id": "2-6-2",
+    "domain": "Mobile Devices",
+    "subdomain": "Application Security",
+    "title": "Secure Mobile Application and Data Management",
+    "full_text": "The organization shall implement controls for mobile applications including application whitelisting, secure coding practices, and regular security testing. Mobile data shall be encrypted and protected with strong authentication. Application stores shall be monitored for unauthorized or compromised applications.",
+    "keywords": ["mobile", "application", "security", "data", "whitelisting"]
+  },
+  {
+    "control_id": "2-7-1",
+    "domain": "Data and Information Protection",
+    "subdomain": "Data Classification",
+    "title": "Data Classification and Handling",
+    "full_text": "The organization shall classify data based on sensitivity and criticality, applying appropriate protection controls. Data handling procedures shall be documented and communicated to all users. Sensitive data shall be identified, inventoried, and protected throughout its lifecycle.",
+    "keywords": ["classification", "data", "sensitivity", "handling", "controls"]
+  },
+  {
+    "control_id": "2-7-2",
+    "domain": "Data and Information Protection",
+    "subdomain": "Data Encryption",
+    "title": "Encryption of Sensitive Data",
+    "full_text": "The organization shall encrypt sensitive data both in transit and at rest using strong encryption algorithms. Encryption keys shall be managed securely with proper generation, storage, and rotation procedures. Encryption status shall be monitored and enforced through technical controls.",
+    "keywords": ["encryption", "data", "transit", "rest", "keys"]
+  },
+  {
+    "control_id": "2-7-3",
+    "domain": "Data and Information Protection",
+    "subdomain": "Data Retention",
+    "title": "Data Retention and Secure Disposal",
+    "full_text": "The organization shall establish data retention policies specifying retention periods for different data categories. Upon end of retention period, data shall be securely disposed of using approved methods that prevent recovery. Disposal activities shall be documented and verified.",
+    "keywords": ["retention", "disposal", "data", "destruction", "lifecycle"]
+  },
+  {
+    "control_id": "2-8-1",
+    "domain": "Cryptography",
+    "subdomain": "Cryptographic Standards",
+    "title": "Cryptographic Standards and Protocols",
+    "full_text": "The organization shall use cryptographic standards approved by recognized bodies (NIST, FIPS) and avoid deprecated or weak algorithms. All cryptographic implementations shall be reviewed for security. TLS/SSL shall be used for all internet communications, and minimum TLS 1.2 shall be enforced.",
+    "keywords": ["cryptography", "standards", "TLS", "SSL", "NIST"]
+  },
+  {
+    "control_id": "2-8-2",
+    "domain": "Cryptography",
+    "subdomain": "Key Management",
+    "title": "Cryptographic Key Management",
+    "full_text": "The organization shall implement a key management system for generating, storing, rotating, and retiring cryptographic keys. Key access shall be restricted to authorized personnel. Key backup and recovery procedures shall be established. Key usage shall be logged and monitored.",
+    "keywords": ["keys", "management", "rotation", "storage", "lifecycle"]
+  },
+  {
+    "control_id": "2-9-1",
+    "domain": "Backup & Recovery",
+    "subdomain": "Backup Strategy",
+    "title": "Backup Strategy and Implementation",
+    "full_text": "The organization shall implement a comprehensive backup strategy covering all critical systems and data. Backups shall be performed at frequencies appropriate to recovery time objectives (RTO). Multiple copies shall be maintained with at least one copy stored offline and geographically separated.",
+    "keywords": ["backup", "RTO", "recovery", "critical", "copies"]
+  },
+  {
+    "control_id": "2-9-2",
+    "domain": "Backup & Recovery",
+    "subdomain": "Disaster Recovery",
+    "title": "Disaster Recovery and Business Continuity Planning",
+    "full_text": "The organization shall develop and maintain disaster recovery and business continuity plans. Plans shall be tested at least annually to verify recovery procedures. Critical systems shall have defined recovery point objectives (RPO) and recovery time objectives (RTO). Backup systems shall be maintained in separate locations.",
+    "keywords": ["disaster", "recovery", "business", "continuity", "testing"]
+  },
+  {
+    "control_id": "2-10-1",
+    "domain": "Vulnerability Management",
+    "subdomain": "Vulnerability Assessment",
+    "title": "Vulnerability Scanning and Assessment",
+    "full_text": "The organization shall conduct regular vulnerability assessments using automated scanning tools and manual testing. Vulnerability assessments shall cover all systems and applications. Results shall be documented and prioritized by severity and exploitability. Scan findings shall be tracked to remediation.",
+    "keywords": ["vulnerability", "scanning", "assessment", "automated", "manual"]
+  },
+  {
+    "control_id": "2-10-2",
+    "domain": "Vulnerability Management",
+    "subdomain": "Remediation",
+    "title": "Vulnerability Remediation and Tracking",
+    "full_text": "The organization shall establish processes for promptly addressing identified vulnerabilities. Critical vulnerabilities shall be remediated within 30 days, high severity within 60 days, and medium severity within 90 days. Remediation efforts shall be tracked to completion and verified.",
+    "keywords": ["vulnerability", "remediation", "tracking", "timeline", "verification"]
+  },
+  {
+    "control_id": "2-10-3",
+    "domain": "Vulnerability Management",
+    "subdomain": "Penetration Testing",
+    "title": "Penetration Testing and Red Team Exercises",
+    "full_text": "The organization shall conduct annual penetration tests by qualified security professionals. Tests shall attempt to exploit identified vulnerabilities to validate exploitation risk. Findings shall be remediated and testing shall be repeated. Red team exercises shall test detection and response capabilities.",
+    "keywords": ["penetration", "testing", "red", "team", "exploitation"]
+  },
+  {
+    "control_id": "2-11-1",
+    "domain": "Physical Security",
+    "subdomain": "Access Control",
+    "title": "Physical Access Control and Monitoring",
+    "full_text": "The organization shall implement physical access controls limiting entry to facilities and sensitive areas. Access shall be controlled through badge systems, surveillance cameras, and security personnel. Visitor access shall be logged and escorted. Unauthorized access attempts shall be detected and reported.",
+    "keywords": ["physical", "access", "control", "facilities", "monitoring"]
+  },
+  {
+    "control_id": "2-11-2",
+    "domain": "Physical Security",
+    "subdomain": "Data Center Security",
+    "title": "Data Center and Server Room Protection",
+    "full_text": "The organization shall implement enhanced security measures for data centers and server rooms. Environmental controls shall maintain appropriate temperature and humidity. Fire suppression systems shall be installed. Physical media shall be secured and tracked.",
+    "keywords": ["data center", "server", "room", "environment", "media"]
+  },
+  {
+    "control_id": "2-12-1",
+    "domain": "Cybersecurity Resilience",
+    "subdomain": "Incident Response",
+    "title": "Incident Response Planning and Procedures",
+    "full_text": "The organization shall maintain an incident response plan defining roles, responsibilities, and procedures for responding to security incidents. The plan shall be tested regularly through tabletop exercises and simulations. Incident response procedures shall be documented and communicated to all relevant personnel.",
+    "keywords": ["incident", "response", "planning", "procedures", "exercises"]
+  },
+  {
+    "control_id": "2-12-2",
+    "domain": "Cybersecurity Resilience",
+    "subdomain": "Forensics and Investigation",
+    "title": "Digital Forensics and Investigation Procedures",
+    "full_text": "The organization shall establish procedures for evidence preservation, collection, and analysis of security incidents. Trained personnel shall conduct forensic investigations to determine incident scope and impact. Evidence shall be maintained according to legal and regulatory requirements.",
+    "keywords": ["forensics", "investigation", "evidence", "preservation", "analysis"]
+  },
+  {
+    "control_id": "2-12-3",
+    "domain": "Cybersecurity Resilience",
+    "subdomain": "Business Continuity",
+    "title": "Business Continuity and Service Restoration",
+    "full_text": "The organization shall implement controls to ensure rapid restoration of critical services following a security incident. Recovery priorities shall be established based on service criticality. Restoration procedures shall be tested and validated. Service continuity shall be verified following incidents.",
+    "keywords": ["continuity", "restoration", "service", "recovery", "testing"]
+  },
+  {
+    "control_id": "2-13-1",
+    "domain": "Human Resources Security",
+    "subdomain": "Employee Screening",
+    "title": "Pre-Employment Screening and Background Checks",
+    "full_text": "The organization shall conduct background checks and security screening for all personnel before employment. Screening shall be proportionate to role and access level. Employment contracts shall include security obligations and confidentiality provisions. Periodic re-screening shall be performed for sensitive positions.",
+    "keywords": ["screening", "background", "checks", "employment", "security"]
+  },
+  {
+    "control_id": "2-13-2",
+    "domain": "Human Resources Security",
+    "subdomain": "Security Awareness",
+    "title": "Security Awareness and Training Program",
+    "full_text": "The organization shall implement a comprehensive security awareness program for all employees. Training shall cover policies, procedures, threat awareness, and incident reporting. Specialized training shall be provided for roles with security responsibilities. Training effectiveness shall be measured.",
+    "keywords": ["awareness", "training", "education", "compliance", "program"]
+  },
+  {
+    "control_id": "2-13-3",
+    "domain": "Human Resources Security",
+    "subdomain": "Termination and Offboarding",
+    "title": "Termination and Offboarding Procedures",
+    "full_text": "The organization shall implement procedures for revoking access and returning assets upon employee termination. IT access, physical access, and security clearances shall be revoked immediately. Exit interviews shall document knowledge of confidential information and security obligations.",
+    "keywords": ["termination", "offboarding", "access", "revocation", "exit"]
+  },
+  {
+    "control_id": "2-13-4",
+    "domain": "Human Resources Security",
+    "subdomain": "Insider Threat",
+    "title": "Insider Threat Detection and Prevention",
+    "full_text": "The organization shall implement controls to detect and prevent insider threats including inappropriate access, excessive privileges, and suspicious user behavior. Behavioral analytics shall identify anomalies. Critical users and systems shall be monitored for misuse of access.",
+    "keywords": ["insider", "threat", "detection", "behavior", "monitoring"]
+  },
+  {
+    "control_id": "2-14-1",
+    "domain": "Third Party Security",
+    "subdomain": "Vendor Assessment",
+    "title": "Third-Party Risk Assessment and Management",
+    "full_text": "The organization shall assess cybersecurity risks posed by third-party vendors and service providers. Assessment shall include security policies, certifications, audit results, and controls. Vendor contracts shall include security requirements and compliance obligations.",
+    "keywords": ["vendor", "third-party", "risk", "assessment", "management"]
+  },
+  {
+    "control_id": "2-14-2",
+    "domain": "Third Party Security",
+    "subdomain": "Vendor Oversight",
+    "title": "Third-Party Security Monitoring and Auditing",
+    "full_text": "The organization shall monitor and audit third-party security controls on an ongoing basis. Security audits shall be conducted annually or as required by contract. Performance metrics shall be established and monitored. Remediation actions shall be tracked to completion.",
+    "keywords": ["vendor", "monitoring", "auditing", "oversight", "compliance"]
+  },
+  {
+    "control_id": "2-14-3",
+    "domain": "Third Party Security",
+    "subdomain": "Data Protection",
+    "title": "Third-Party Data Protection and Confidentiality",
+    "full_text": "The organization shall ensure third parties protect organizational data with controls equivalent to those applied internally. Data processing agreements shall define responsibilities and restrictions. Subcontractors shall be subject to equivalent security requirements. Unauthorized data access shall be monitored.",
+    "keywords": ["third-party", "data", "protection", "confidentiality", "agreement"]
+  }
+]

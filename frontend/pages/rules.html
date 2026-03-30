@@ -1,83 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAIA - Rules Management</title>
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/layout.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
-    <link rel="stylesheet" href="../assets/css/pages.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIA — Detection Rules</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 
-    <header class="top-nav">
-        <div class="nav-left">
-            <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
-            <h1 class="system-name">SAIA</h1>
-            <span class="system-tagline">Secure Artificial Intelligence Auditor</span>
-        </div>
-        <div class="nav-right">
-            <div class="user-info">
-                <span class="user-role">Administrator</span>
-                <div class="user-avatar">AD</div>
-            </div>
-            <button class="notification-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="notification-badge">1</span></button>
-        </div>
-    </header>
+  <header class="top-nav">
+    <div class="nav-left">
+      <button class="menu-toggle" id="menuToggle"><span></span><span></span><span></span></button>
+      <span class="system-name">SAIA</span>
+    </div>
+    <div class="nav-right">
+      <div class="user-info">
+        <div class="user-avatar">U</div>
+        <div><div class="user-name">User</div><div class="user-role">Role</div></div>
+      </div>
+      <button class="btn-icon" id="logoutBtn" title="Logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </header>
 
-    <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
-            <a href="../index.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg><span>Dashboard</span></a>
-            <a href="alerts.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><span>Alerts</span></a>
-            <a href="reports.html" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg><span>Reports</span></a>
-            <a href="rules.html" class="nav-item active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="3"></circle></svg><span>Rules Management</span></a>
-            <a href="#" class="nav-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>Users / Roles</span></a>
-        </nav>
-    </aside>
-    <main class="main-content">
-        <div class="page-header"><h1>Rules Management</h1><p class="page-description">Create, edit, and manage compliance rules mapped to regulatory clauses</p></div>
-        <section class="rules-management">
-            <div class="action-card">
-                <div class="card-header"><h2>Create New Rule</h2></div>
-                <form id="ruleForm" class="rule-form">
-                    <div class="form-row">
-                        <div class="form-group"><label for="ruleName">Rule Name</label><input type="text" id="ruleName" class="form-control" placeholder="e.g., Unauthorized Access Detection" required></div>
-                        <div class="form-group"><label for="ruleFramework">Regulatory Framework</label>
-                            <select id="ruleFramework" class="form-control" required><option value="">Select Framework</option><option value="NCA">NCA</option><option value="SAMA">SAMA</option><option value="CST">CST</option><option value="IA">IA</option></select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label for="clauseRef">Clause Reference</label><input type="text" id="clauseRef" class="form-control" placeholder="e.g., NCA-ACC-4.2.1" required></div>
-                        <div class="form-group"><label for="severity">Severity Level</label>
-                            <select id="severity" class="form-control" required><option value="Critical">Critical</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>
-                        </div>
-                    </div>
-                    <div class="form-group"><label for="ruleDescription">Description</label><textarea id="ruleDescription" class="form-control" rows="3" placeholder="Describe what this rule detects..." required></textarea></div>
-                    <div class="form-group"><label for="ruleLogic">Rule Logic (JSON)</label><textarea id="ruleLogic" class="form-control code-input" rows="6" placeholder='{"condition": "user.login_time > business_hours", "threshold": 3}' required></textarea><small class="form-hint">Enter rule logic in JSON format</small></div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-secondary" id="validateBtn">Validate Syntax</button>
-                        <button type="submit" class="btn-primary">Publish Rule</button>
-                    </div>
-                </form>
-                <div id="validationResult" class="validation-result"></div>
-            </div>
-            <div class="existing-rules">
-                <h2>Active Rules</h2>
-                <div class="rules-stats">
-                    <div class="stat-item"><span class="stat-value">47</span><span class="stat-label">Total Rules</span></div>
-                    <div class="stat-item"><span class="stat-value">42</span><span class="stat-label">Active</span></div>
-                    <div class="stat-item"><span class="stat-value">5</span><span class="stat-label">Draft</span></div>
-                </div>
-                <div class="rules-list">
-                    <div class="rule-item"><div class="rule-header"><h4>Failed Login Attempts Detection</h4><span class="severity-badge critical">Critical</span></div><p class="rule-clause">NCA-ACC-4.2.1</p><p class="rule-desc">Detects multiple failed login attempts within 5 minutes</p><div class="rule-meta"><span>Version 2.1</span><span>Last updated: 2024-10-15</span><span>Author: Admin</span></div><div class="rule-actions"><button class="btn-icon" title="Edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="btn-icon" title="Test"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></button><button class="btn-icon" title="History"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></button></div></div>
-                    <div class="rule-item"><div class="rule-header"><h4>Unencrypted Data Transfer</h4><span class="severity-badge high">High</span></div><p class="rule-clause">SAMA-ENC-3.1.5</p><p class="rule-desc">Identifies data transfers without TLS encryption</p><div class="rule-meta"><span>Version 1.3</span><span>Last updated: 2024-10-10</span><span>Author: Security Team</span></div><div class="rule-actions"><button class="btn-icon" title="Edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button><button class="btn-icon" title="Test"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline></svg></button><button class="btn-icon" title="History"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></button></div></div>
-                    <div class="rule-item"><div class="rule-header"><h4>Log Retention Policy Violation</h4><span class="severity-badge medium">Medium</span></div><p class="rule-clause">CST-LOG-2.3.2</p><p class="rule-desc">Monitors log retention compliance (minimum 90 days)</p><div class="rule-meta"><span>Version 1.0</span><span>Last updated: 2024-09-28</span><span>Author: Compliance</span></div><div class="rule-actions"><button class="btn-icon" title="Edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path></svg></button><button class="btn-icon" title="Test"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline></svg></button><button class="btn-icon" title="History"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></button></div></div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <script src="../assets/js/data/mock-data.js"></script>
-    <script src="../assets/js/components/workflow.js"></script>
-    <script src="../assets/js/pages/rules.js"></script>
-    <script src="../assets/js/pages/dashboard.js"></script>
+  <aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav" id="sidebarNav"></nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header-row">
+      <div>
+        <h1 style="font-size:22px;font-weight:700;">Detection Rules</h1>
+        <p style="font-size:13px;color:var(--text-secondary);margin-top:2px;">Configure rule-based anomaly detection mapped to NCA ECC controls</p>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary" onclick="showToast('Dry-run complete — 3 rules would have fired','info')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Dry Run All
+        </button>
+        <button class="btn btn-primary" id="newRuleBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Rule
+        </button>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="table-header">
+        <div class="filter-row">
+          <div class="search-bar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" class="form-control" placeholder="Search rules…">
+          </div>
+          <select class="form-control"><option value="">All Domains</option><option>IAM</option><option>Network</option><option>Application</option><option>Cloud</option></select>
+          <select class="form-control"><option value="">All Statuses</option><option>active</option><option>inactive</option></select>
+        </div>
+      </div>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>Rule Name</th><th>Domain</th><th>NCA Clause</th><th>Operator</th><th>Threshold</th><th>Severity</th><th>Status</th><th>Fires (7d)</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="rulesBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- New Rule Modal -->
+  <div class="modal-overlay hidden" id="ruleModal">
+    <div class="modal" style="max-width:600px;">
+      <div class="modal-header">
+        <h3>Create Detection Rule</h3>
+        <button class="modal-close" onclick="document.getElementById('ruleModal').classList.add('hidden')">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div class="form-group" style="grid-column:1/-1;"><label>Rule Name</label><input type="text" class="form-control" placeholder="e.g. Excessive failed logins"></div>
+          <div class="form-group"><label>Domain</label><select class="form-control"><option>IAM</option><option>Network</option><option>Application</option><option>Cloud</option></select></div>
+          <div class="form-group"><label>NCA Clause</label><input type="text" class="form-control" placeholder="e.g. 2-2-1"></div>
+          <div class="form-group"><label>Operator</label><select class="form-control"><option>threshold</option><option>regex</option><option>geo_anomaly</option><option>time_window</option><option>sequence</option></select></div>
+          <div class="form-group"><label>Threshold Value</label><input type="number" class="form-control" placeholder="e.g. 10"></div>
+          <div class="form-group"><label>Severity</label><select class="form-control"><option>critical</option><option>high</option><option selected>medium</option><option>low</option></select></div>
+          <div class="form-group"><label>Time Window (seconds)</label><input type="number" class="form-control" placeholder="e.g. 300"></div>
+          <div class="form-group" style="grid-column:1/-1;"><label>Description</label><textarea class="form-control" placeholder="Describe what this rule detects…"></textarea></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="document.getElementById('ruleModal').classList.add('hidden')">Cancel</button>
+        <button class="btn btn-secondary" onclick="showToast('Dry run: rule would fire on 3 recent events','info')">Dry Run</button>
+        <button class="btn btn-primary" onclick="showToast('Rule created','success');document.getElementById('ruleModal').classList.add('hidden')">Save Rule</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script>
+    const MOCK_RULES = [
+      { name:'Excessive Failed Logins', domain:'IAM',         clause:'2-2-1', operator:'threshold',   threshold:'≥10 / 5min', severity:'high',     status:'active',   fires:12 },
+      { name:'Off-Hours Privileged Access', domain:'IAM',     clause:'2-2-3', operator:'time_window',  threshold:'Outside 07-18', severity:'medium', status:'active',   fires:5 },
+      { name:'Port Scan Detection', domain:'Network',          clause:'2-4-1', operator:'threshold',   threshold:'≥50 ports/min', severity:'high',   status:'active',   fires:3 },
+      { name:'Geolocation Anomaly', domain:'IAM',              clause:'2-2-2', operator:'geo_anomaly', threshold:'Foreign IP',   severity:'critical', status:'active',   fires:2 },
+      { name:'SQL Injection Pattern', domain:'Application',    clause:'2-7-1', operator:'regex',       threshold:'Union/Select',  severity:'critical', status:'active',  fires:0 },
+      { name:'Cloud Storage Public Exposure', domain:'Cloud',  clause:'2-11-1',operator:'threshold',   threshold:'ACL=public',   severity:'critical', status:'active',   fires:1 },
+      { name:'Inactive Rule Example', domain:'Network',        clause:'2-4-3', operator:'threshold',   threshold:'≥100 pps',     severity:'low',      status:'inactive', fires:0 },
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const tbody = document.getElementById('rulesBody');
+      tbody.innerHTML = MOCK_RULES.map(r => `
+        <tr>
+          <td style="font-weight:500;">${r.name}</td>
+          <td style="font-size:12px;color:var(--text-secondary);">${r.domain}</td>
+          <td><span class="clause-chip">${r.clause}</span></td>
+          <td style="font-size:12px;font-family:monospace;">${r.operator}</td>
+          <td style="font-size:12px;color:var(--text-secondary);">${r.threshold}</td>
+          <td><span class="severity-badge ${r.severity}">${r.severity}</span></td>
+          <td>
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+              <input type="checkbox" ${r.status==='active'?'checked':''} style="accent-color:var(--brand);width:14px;height:14px;" onchange="showToast('Rule ${r.status==='active'?'disabled':'enabled'}','info')">
+              <span class="status-badge ${r.status}">${r.status}</span>
+            </label>
+          </td>
+          <td style="font-size:12px;font-weight:600;color:${r.fires>5?'var(--critical)':r.fires>0?'var(--medium)':'var(--text-tertiary)'};">${r.fires}</td>
+          <td style="display:flex;gap:4px;">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Dry run: rule would fire on ${Math.max(0,r.fires-1)} events','info')">Test</button>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Edit coming soon','info')">Edit</button>
+          </td>
+        </tr>`).join('');
+
+      document.getElementById('newRuleBtn').addEventListener('click', () => document.getElementById('ruleModal').classList.remove('hidden'));
+      document.getElementById('ruleModal').addEventListener('click', function(e) { if(e.target===this) this.classList.add('hidden'); });
+    });
+  </script>
 </body>
 </html>
